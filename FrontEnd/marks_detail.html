@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Details</title>
+    <title>Student Marks</title>
 
-    <!-- Favicon -->
+
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Bootstrap Icons -->
@@ -123,29 +123,29 @@
         }
 
         /* Table Styling */
-        #studentTable {
+        #marksTable {
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        #studentTable thead {
+        #marksTable thead {
             background-color: var(--primary-color);
             color: white;
         }
 
-        #studentTable thead th {
+        #marksTable thead th {
             border: none;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        #studentTable.table-striped tbody tr:nth-of-type(odd) {
+        #marksTable.table-striped tbody tr:nth-of-type(odd) {
             background-color: rgba(0, 188, 212, 0.05);
         }
 
-        #studentTable.table-hover tbody tr:hover {
+        #marksTable.table-hover tbody tr:hover {
             background-color: rgba(0, 188, 212, 0.1);
             transition: background-color 0.3s ease;
         }
@@ -220,64 +220,53 @@
 </nav>
 
 <!-- Heading -->
-<h3 id="heading">Manage Students</h3>
+<h3 id="heading">Manage Marks</h3>
 
-<!-- Add Student Button -->
+
+<!-- Add Marks Button -->
+
 <div class="d-flex justify-content-end mt-3 me-3">
-    <button type="button" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#addStudentModal">
-        <i class="bi bi-plus-circle me-1"></i> Add Student
+    <button type="button" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#addMarksModal">
+        <i class="bi bi-plus-circle me-1"></i> Add Marks
     </button>
 </div>
 
 
-<!-- Add Student Modal -->
-<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+<!-- Add Marks Modal -->
+
+<div class="modal fade" id="addMarksModal" tabindex="-1" aria-labelledby="addMarksModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
+                <h5 class="modal-title" id="addMarksModalLabel">Add Marks</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addStudentForm">
+                <form id="addMarksForm">
                     <div class="mb-3">
                         <label for="studentName" class="form-label">Student Name</label>
-                        <input type="text" class="form-control" id="studentName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="age" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="age" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="tel" class="form-control" id="phone" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="address" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="school" class="form-label">School</label>
-                        <input type="text" class="form-control" id="school" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Student Photo</label>
-                        <input type="file" class="form-control" id="image">
-                    </div>
-                    <div class="mb-3">
-                        <label for="adminId" class="form-label">Admin</label>
-                        <select class="form-select" id="adminId">
-                            <option value="">Select Admin</option>
-
+                        <select class="form-select" id="studentName">
+                            <option value="">Select Student</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="subjectName" class="form-label">Subject Name</label>
+                        <select class="form-select" id="subjectName">
+                            <option value="">Select Subject</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paperNumber" class="form-label">Paper Number</label>
+                        <input type="text" class="form-control" id="paperNumber" placeholder="Enter Paper number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="marks" class="form-label">Received Marks</label>
+                        <input type="text" class="form-control" id="marks" placeholder="Enter Marks" required>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="saveBtn">Save Student</button>
+                        <button type="button" class="btn btn-primary" id="saveBtn">Save Marks</button>
                     </div>
                 </form>
             </div>
@@ -286,57 +275,36 @@
 </div>
 
 
-<!-- Edit Student Modal -->
-
-<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+<div class="modal fade" id="editMarksModal" tabindex="-1" aria-labelledby="editMarksModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+                <h5 class="modal-title" id="editMarksModalLabel">Edit Student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editStudentForm">
+                <form id="editMarksForm">
                     <div class="mb-3">
                         <label for="studentName2" class="form-label">Student Name</label>
-                        <input type="text" class="form-control" id="studentName2">
-                    </div>
-                    <div class="mb-3">
-                        <label for="studentAge" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="studentAge" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="studentEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="studentEmail" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="studentPhone" class="form-label">Phone</label>
-                        <input type="tel" class="form-control" id="studentPhone" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="studentAddress" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="studentAddress" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="studentSchool" class="form-label">School</label>
-                        <input type="text" class="form-control" id="studentSchool" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="imageUrl" class="form-label">Default Photo</label>
-                        <input type="text" class="form-control" id="imageUrl" placeholder="Input image" name="product_imgUrl" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="studentImage" class="form-label">Student Photo</label>
-                        <input type="file" class="form-control" id="studentImage">
-                    </div>
-                    <div class="mb-3">
-                        <label for="adminId2" class="form-label">Admin</label>
-                        <select class="form-select" id="adminId2">
-                            <option value="">Select Admin</option>
-
+                        <select class="form-select" id="studentName2">
+                            <option value="">Select Student</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="subjectName2" class="form-label">Subject Name</label>
+                        <select class="form-select" id="subjectName2">
+                            <option value="">Select Subject</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paperNumber2" class="form-label">Paper Number</label>
+                        <input type="text" class="form-control" id="paperNumber2" placeholder="Enter Paper number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="marks2" class="form-label">Received Marks</label>
+                        <input type="text" class="form-control" id="marks2" placeholder="Enter Marks" required>
+                    </div>
+
                     <button type="button" class="btn btn-primary" id="updateBtn">Save Changes</button>
                 </form>
             </div>
@@ -344,29 +312,29 @@
     </div>
 </div>
 
-<!-- Student Table -->
+
 <section>
     <div class="container mt-4">
         <div class="row mb-3">
             <div class="col-md-6">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search Student by Name">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search Mark by Student">
             </div>
         </div>
         <br>
         <div class="table-responsive">
-            <table class="table table-striped table-hover" id="studentTable">
+            <table class="table table-striped table-hover" id="marksTable">
                 <thead>
                 <tr>
 
                     <th>Student Name</th>
-                    <th>Address</th>
-                    <th>Contact</th>
-                    <th>Photo</th>
+                    <th>Subject Name</th>
+                    <th>Paper No</th>
+                    <th>Received Mark</th>
                     <th>Actions</th>
 
                 </tr>
                 </thead>
-                <tbody id="studentTableBody">
+                <tbody id="marksTableBody">
                 <!-- Records will be inserted dynamically here -->
                 </tbody>
             </table>
@@ -375,32 +343,9 @@
 </section>
 
 
-<!-- Student Details Modal -->
-<div class="modal fade" id="studentDetailsModal" tabindex="-1" aria-labelledby="studentDetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="studentDetailsModalLabel">Student Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img id="studentPhoto" class="rounded-circle mb-3" width="150" height="150" alt="Student Photo">
-                <h4 id="studentName3"></h4>
-                <p><strong>Phone:</strong> <span id="studentPhone3"></span></p>
-                <p><strong>Address:</strong> <span id="studentAddress3"></span></p>
-                <p><strong>Email:</strong> <span id="studentEmail3"></span></p>
-                <p><strong>Age:</strong> <span id="studentAge3"></span></p>
-                <p><strong>School:</strong> <span id="studentSchool3"></span></p>
-                <p><strong>Admin ID:</strong> <span id="adminId3"></span></p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="js/student_details.js"></script>
-<!-- Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="js/marks_detail.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

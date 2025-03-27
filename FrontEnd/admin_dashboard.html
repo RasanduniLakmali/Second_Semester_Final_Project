@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin dashboard</title>
+
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0" id="navbar">
+    <a href="index.html" class="navbar-brand d-flex flex-column align-items-start px-4 px-lg-5">
+        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>SARASAVI</h2>
+        <h5 class="m-0 text-primary">Higher Education Institute</h5>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="admin_dashboard.html" class="nav-item nav-link active">Home</a>
+            <a href="subject_details.html" class="nav-item nav-link">Subjects</a>
+            <a href="instructors_details.html" class="nav-item nav-link">Instructors</a>
+            <a href="students_details.html" class="nav-item nav-link">Students</a>
+            <a href="classes_details.html" class="nav-item nav-link">Classes</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="schedule_details.html" class="dropdown-item">Schedules</a>
+                    <a href="testimonial.html" class="dropdown-item">Payments</a>
+                    <a href="attendance_details.html" class="dropdown-item">Attendance</a>
+
+                </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a href="admin_profile.html" class="nav-item nav-link">Profile</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<div class="container-fluid p-0 mb-5">
+    <div class="owl-carousel header-carousel position-relative">
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="img/carousel-1.jpg" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-sm-10 col-lg-8">
+                            <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
+                            <h1 class="display-3 text-white animated slideInDown">The Best Online Learning Platform</h1>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-sm-10 col-lg-8">
+                            <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
+                            <h1 class="display-3 text-white animated slideInDown">Get Educated Online From Your Home</h1>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/login.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("restricted") === "true") {
+            document.getElementById("navbar").style.display = "none"; // Hide navbar
+        }
+    });
+</script>
+</body>
+</html>

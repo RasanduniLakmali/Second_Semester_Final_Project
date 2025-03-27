@@ -29,6 +29,32 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .instructor-image-container {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .team-item .overflow-hidden img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .team-item {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-item .text-center {
+            margin-top: auto;
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -43,8 +69,9 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
+        <a href="index.html" class="navbar-brand d-flex flex-column align-items-start px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>SARASAVI</h2>
+            <h5 class="m-0 text-primary">Higher Education Institute</h5>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -68,8 +95,9 @@
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="contact.html" class="nav-item nav-link">Profile</a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+
         </div>
     </nav>
     <!-- Navbar End -->
@@ -104,7 +132,7 @@
                         <div class="p-4">
                             <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
                             <h5 class="mb-3">Skilled Instructors</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <p>Expert instructors guiding you to success!</p>
                         </div>
                     </div>
                 </div>
@@ -112,8 +140,8 @@
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-globe text-primary mb-4"></i>
-                            <h5 class="mb-3">Online Classes</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <h5 class="mb-3">Classes</h5>
+                            <p>Top-notch classes for better learning!</p>
                         </div>
                     </div>
                 </div>
@@ -121,8 +149,8 @@
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-home text-primary mb-4"></i>
-                            <h5 class="mb-3">Home Projects</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <h5 class="mb-3">Subjects</h5>
+                            <p>Wide range of subjects for every learner!</p>
                         </div>
                     </div>
                 </div>
@@ -130,8 +158,8 @@
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
-                            <h5 class="mb-3">Book Library</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <h5 class="mb-3">Testimonial</h5>
+                            <p>Hear from our happy students!Student Success Stories</p>
                         </div>
                     </div>
                 </div>
@@ -152,9 +180,9 @@
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                     <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
-                    <h1 class="mb-4">Welcome to eLEARNING</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                    <h1 class="mb-4">Welcome to SARASAVI Institute</h1>
+                    <p class="mb-4">SARASAVI Higher Education Institute is a leading educational institution offering high-quality tuition services for students at various academic levels. Focused on delivering personalized learning experiences, SARASAVI provides physical classes that cater to individual student needs. The institute emphasizes academic excellence, self-discipline, and time management, with innovative features like a personalized study planner and class recordings to support students. At SARASAVI, we are committed to helping students achieve their full potential and excel in their academic journeys.</p>
+
                     <div class="row gy-2 gx-4 mb-4">
                         <div class="col-sm-6">
                             <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
@@ -175,7 +203,7 @@
                             <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
+
                 </div>
             </div>
         </div>
@@ -190,79 +218,8 @@
                 <h6 class="section-title bg-white text-center text-primary px-3">Instructors</h6>
                 <h1 class="mb-5">Expert Instructors</h1>
             </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="team-item bg-light">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
-                        </div>
-                        <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
-                            <div class="bg-light d-flex justify-content-center pt-2 px-1">
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-sm-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
+            <div class="row g-4 instCards">
+                <!-- Instructors will be dynamically loaded here -->
             </div>
         </div>
     </div>
@@ -354,6 +311,51 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
+    <script src="js/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            function loadInstructors() {
+                $.ajax({
+                    url: 'http://localhost:8080/api/v1/instructor/getAll',
+                    method: 'GET',
+                    success: function(res) {
+                        $('.instCards').empty(); // Clear existing cards
+                        res.forEach(function(instructor) {
+                            $('.instCards').append(`
+                            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="team-item bg-light h-100">
+                                    <div class="overflow-hidden instructor-image-container">
+                                        <img class="img-fluid w-100 h-100 object-fit-cover"
+                                             src="http://localhost:8080/uploads/${instructor.image}"
+                                             alt="${instructor.instructor_name}">
+                                    </div>
+                                    <div class="position-relative d-flex justify-content-center" style="margin-top: -23px;">
+                                       <div class="bg-light d-flex justify-content-center pt-2 px-1">
+                                           <a class="btn btn-sm-square btn-primary mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                           <a class="btn btn-sm-square btn-primary mx-1" href="#"><i class="fab fa-whatsapp"></i></a>
+                                       </div>
+                                    </div>
+                                    <div class="text-center p-4">
+                                        <h5 class="mb-0">${instructor.instructor_name}</h5>
+                                        <small class="text-muted">${instructor.qualification}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching instructors:", error);
+                        $('.instCards').html('<p>Unable to load instructors</p>');
+                    }
+                });
+            }
+
+            // Call the function to load instructors when page loads
+            loadInstructors();
+        });
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -365,6 +367,8 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+
 </body>
 
 </html>
