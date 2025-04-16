@@ -24,3 +24,59 @@ Screenshots
 ![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/e2a76b6e77feddcd447a7c8f6f98360c4d96c953/Screenshot%202025-04-16%20222429.png)
 
 
+Technologies used
+
+Frontend
+
+         HTML
+         Bootstrap
+         CSS
+   
+Backend
+
+         Spring Boot
+         Spring Security
+         JWT Authentication
+   
+Database
+          
+          MySQL
+
+
+
+
+⚙️ Setup Instructions
+
+🔧 Backend Setup (Spring Boot)
+1. Clone the repo:
+
+git clone https://github.com/RasanduniLakmali/Second_Semester_Final_Project.git
+
+cd tuition-management-system/backend
+
+
+2. Update the application.properties:
+
+spring.datasource.url=jdbc:mysql://localhost:3306/tutionClass_system
+
+spring.datasource.username=root
+
+spring.datasource.password=yourpassword
+
+
+3. Run the application:
+
+mvn spring-boot:run
+
+
+🌐 Frontend Setup
+
+1. Navigate to the frontend folder:
+
+cd ../frontend
+
+
+🎬 Demo Video
+
+
+
