@@ -4,5 +4,23 @@ The Smart Tuition Class Management System is a full-stack application designed t
 
 The system uses **JWT (JSON Web Tokens)** for secure authentication and includes **email verification** for added security.
 
-Demo Video Link
+Screenshots
+
+1) Login Page
+![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20205645.png)
+
+2) Admin Dashboard
+![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20205756.png)
+
+3) Student Dashboard
+![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20205756.png)
+
+4) Student Details Page And Add student Form
+![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20222330.png)
+
+![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20222719.png)
+
+5) Subject Details Page
+![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20222719.png)
+
 
