@@ -1,0 +1,813 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>SARASAVI - Payment Page</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <style>-->
+<!--        :root {-->
+<!--            &#45;&#45;primary-color: #00bcd4;-->
+<!--            &#45;&#45;primary-dark: #008ba3;-->
+<!--            &#45;&#45;white: #ffffff;-->
+<!--            &#45;&#45;light-gray: #f5f5f5;-->
+<!--            &#45;&#45;dark-gray: #333333;-->
+<!--        }-->
+
+<!--        body {-->
+<!--            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;-->
+<!--            background-color: var(&#45;&#45;light-gray);-->
+<!--        }-->
+
+<!--        .navbar {-->
+<!--            background-color: var(&#45;&#45;white);-->
+<!--            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+
+<!--        .navbar-brand {-->
+<!--            color: var(&#45;&#45;primary-color);-->
+<!--            font-weight: bold;-->
+<!--            font-size: 1.5rem;-->
+<!--        }-->
+
+<!--        .nav-link {-->
+<!--            color: var(&#45;&#45;dark-gray);-->
+<!--            font-weight: 500;-->
+<!--        }-->
+
+<!--        .nav-link.active, .nav-link:hover {-->
+<!--            color: var(&#45;&#45;primary-color);-->
+<!--        }-->
+
+<!--        .header-section {-->
+<!--            background-color: var(&#45;&#45;primary-color);-->
+<!--            color: var(&#45;&#45;white);-->
+<!--            padding: 3rem 0;-->
+<!--        }-->
+
+<!--        .breadcrumb-item a {-->
+<!--            color: var(&#45;&#45;white);-->
+<!--            text-decoration: none;-->
+<!--        }-->
+
+<!--        .breadcrumb-item.active {-->
+<!--            color: rgba(255, 255, 255, 0.8);-->
+<!--        }-->
+
+<!--        .breadcrumb-item+.breadcrumb-item::before {-->
+<!--            color: var(&#45;&#45;white);-->
+<!--        }-->
+
+<!--        .card {-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);-->
+<!--            margin-bottom: 2rem;-->
+<!--        }-->
+
+<!--        .card-header {-->
+<!--            background-color: var(&#45;&#45;white);-->
+<!--            border-bottom: 1px solid rgba(0, 0, 0, 0.125);-->
+<!--            font-weight: 600;-->
+<!--        }-->
+
+<!--        .btn-primary {-->
+<!--            background-color: var(&#45;&#45;primary-color);-->
+<!--            border-color: var(&#45;&#45;primary-color);-->
+<!--        }-->
+
+<!--        .btn-primary:hover {-->
+<!--            background-color: var(&#45;&#45;primary-dark);-->
+<!--            border-color: var(&#45;&#45;primary-dark);-->
+<!--        }-->
+
+<!--        .payment-info {-->
+<!--            background-color: rgba(0, 188, 212, 0.1);-->
+<!--            border-left: 4px solid var(&#45;&#45;primary-color);-->
+<!--        }-->
+
+<!--        footer {-->
+<!--            background-color: var(&#45;&#45;dark-gray);-->
+<!--            color: var(&#45;&#45;white);-->
+<!--            padding: 2rem 0;-->
+<!--        }-->
+
+<!--        .fee-display {-->
+<!--            font-size: 1.8rem;-->
+<!--            font-weight: bold;-->
+<!--            color: var(&#45;&#45;primary-color);-->
+<!--        }-->
+
+<!--        .date-display {-->
+<!--            background-color: var(&#45;&#45;light-gray);-->
+<!--            border: none;-->
+<!--            font-weight: 500;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; Navigation Bar &ndash;&gt;-->
+<!--<nav class="navbar navbar-expand-lg navbar-light">-->
+<!--    <div class="container">-->
+<!--        <a class="navbar-brand" href="#">-->
+<!--            <i class="bi bi-book"></i> SARASAVI-->
+<!--        </a>-->
+<!--        <span class="d-none d-md-inline text-muted">Higher Education Institute</span>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav ms-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">HOME</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">ABOUT</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">SUBJECTS</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">INSTRUCTORS</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">STUDENTS</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="#">CLASSES</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">PAGES</a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li><a class="dropdown-item" href="#">My Profile</a></li>-->
+<!--                        <li><a class="dropdown-item" href="#">Settings</a></li>-->
+<!--                        <li><hr class="dropdown-divider"></li>-->
+<!--                        <li><a class="dropdown-item" href="#">Logout</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">CONTACT</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<!--&lt;!&ndash; Header Section &ndash;&gt;-->
+<!--<section class="header-section">-->
+<!--    <div class="container">-->
+<!--        <h1 class="text-center mb-3">Payment Page</h1>-->
+<!--        <nav aria-label="breadcrumb">-->
+<!--            <ol class="breadcrumb justify-content-center">-->
+<!--                <li class="breadcrumb-item"><a href="#">Home</a></li>-->
+<!--                <li class="breadcrumb-item"><a href="#">Classes</a></li>-->
+<!--                <li class="breadcrumb-item active" aria-current="page">Payment</li>-->
+<!--            </ol>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!-- Main Content -->
+
+<!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--<footer class="mt-5">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-6">-->
+<!--                <h5>SARASAVI Higher Education Institute</h5>-->
+<!--                <p>Providing quality education since 2005</p>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 text-md-end">-->
+<!--                <p>&copy; 2025 SARASAVI. All rights reserved.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</footer>-->
+
+
+<!--<script src="js/jquery-3.7.1.min.js"></script>-->
+<!--<script src="js/navbar_settings.js"></script>-->
+<!--<script src="js/payment.js"></script>-->
+
+
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--<script>-->
+<!--    // Set current date on page load-->
+<!--    document.addEventListener('DOMContentLoaded', function() {-->
+<!--        const dateField = document.getElementById('currentDate');-->
+<!--        const today = new Date();-->
+
+<!--        // Format date as YYYY-MM-DD-->
+<!--        const year = today.getFullYear();-->
+<!--        const month = String(today.getMonth() + 1).padStart(2, '0');-->
+<!--        const day = String(today.getDate()).padStart(2, '0');-->
+
+<!--        dateField.value = `${year}-${month}-${day}`;-->
+<!--    });-->
+
+<!--    // Class fees based on subject and grade-->
+<!--    const classFees = {-->
+<!--        accounting: {-->
+<!--            grade10: 65,-->
+<!--            grade11: 70,-->
+<!--            grade12: 75,-->
+<!--            grade13: 80-->
+<!--        },-->
+<!--        mathematics: {-->
+<!--            grade10: 70,-->
+<!--            grade11: 75,-->
+<!--            grade12: 80,-->
+<!--            grade13: 85-->
+<!--        },-->
+<!--        physics: {-->
+<!--            grade10: 70,-->
+<!--            grade11: 75,-->
+<!--            grade12: 80,-->
+<!--            grade13: 85-->
+<!--        },-->
+<!--        chemistry: {-->
+<!--            grade10: 70,-->
+<!--            grade11: 75,-->
+<!--            grade12: 80,-->
+<!--            grade13: 85-->
+<!--        },-->
+<!--        biology: {-->
+<!--            grade10: 70,-->
+<!--            grade11: 75,-->
+<!--            grade12: 80,-->
+<!--            grade13: 85-->
+<!--        },-->
+<!--        business: {-->
+<!--            grade10: 65,-->
+<!--            grade11: 70,-->
+<!--            grade12: 75,-->
+<!--            grade13: 80-->
+<!--        },-->
+<!--        economics: {-->
+<!--            grade10: 65,-->
+<!--            grade11: 70,-->
+<!--            grade12: 75,-->
+<!--            grade13: 80-->
+<!--        },-->
+<!--        english: {-->
+<!--            grade10: 60,-->
+<!--            grade11: 65,-->
+<!--            grade12: 70,-->
+<!--            grade13: 75-->
+<!--        }-->
+<!--    };-->
+
+<!--    // Update fee when subject or grade changes-->
+<!--    const subjectSelect = document.getElementById('subject');-->
+<!--    const gradeSelect = document.getElementById('grade');-->
+<!--    const feeDisplay = document.getElementById('feeDisplay');-->
+<!--    const payButton = document.getElementById('payButton');-->
+
+<!--    function updateFee() {-->
+<!--        const subject = subjectSelect.value;-->
+<!--        const grade = gradeSelect.value;-->
+
+<!--        if (subject && grade && classFees[subject] && classFees[subject][grade]) {-->
+<!--            const fee = classFees[subject][grade];-->
+<!--            feeDisplay.textContent = `$${fee}.00`;-->
+<!--            payButton.textContent = `Pay $${fee}.00`;-->
+<!--            payButton.disabled = false;-->
+<!--        } else {-->
+<!--            feeDisplay.textContent = '$0.00';-->
+<!--            payButton.textContent = 'Complete Payment';-->
+<!--            payButton.disabled = true;-->
+<!--        }-->
+<!--    }-->
+
+<!--    subjectSelect.addEventListener('change', updateFee);-->
+<!--    gradeSelect.addEventListener('change', updateFee);-->
+
+<!--    // Form submission-->
+<!--    document.getElementById('paymentForm').addEventListener('submit', function(event) {-->
+<!--        event.preventDefault();-->
+
+<!--        // Get selected values-->
+<!--        const subject = subjectSelect.value;-->
+<!--        const grade = gradeSelect.value;-->
+<!--        const fee = classFees[subject][grade];-->
+
+<!--        // In a real application, this would send payment data to a server-->
+<!--        alert(`Processing payment of $${fee}.00 for ${subject.charAt(0).toUpperCase() + subject.slice(1)} (${grade.replace('grade', 'Grade ')})`);-->
+
+<!--        // You would normally redirect to a success page or show a confirmation message-->
+<!--    });-->
+
+
+
+<!--</script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PayHere Sandbox Payment</title>
+    <script src="https://www.payhere.lk/lib/payhere.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>-->
+            :root {
+                --primary-color: #00bcd4;
+                --primary-dark: #008ba3;
+                --white: #ffffff;
+                --light-gray: #f5f5f5;
+                --dark-gray: #333333;
+            }
+
+            body {
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            background-color: var(--light-gray);
+                        }
+
+            .navbar {
+                            background-color: var(--white);
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        }
+
+            .navbar-brand {
+                            color: var(--primary-color);
+                            font-weight: bold;
+                            font-size: 1.5rem;
+                        }
+
+            .nav-link {
+                            color: var(--dark-gray);
+                            font-weight: 500;
+                        }
+
+            .nav-link.active, .nav-link:hover {
+                            color: var(--primary-color);
+                        }
+
+            .header-section {
+                            background-color: var(--primary-color);
+                            color: var(--white);
+                            padding: 3rem 0;
+                        }
+
+            .breadcrumb-item a {
+                            color: var(--white);
+                            text-decoration: none;
+                        }
+
+            .breadcrumb-item.active {
+                            color: rgba(255, 255, 255, 0.8);
+                        }
+
+            .breadcrumb-item+.breadcrumb-item::before {
+                            color: var(--white);
+                        }
+
+            .card {
+                            border-radius: 10px;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                            margin-bottom: 2rem;
+                        }
+
+            .card-header {
+                            background-color: var(--white);
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+                            font-weight: 600;
+                        }
+
+            .btn-primary {
+                            background-color: var(--primary-color);
+                            border-color: var(--primary-color);
+                        }
+
+            .btn-primary:hover {
+                            background-color: var(--primary-dark);
+                            border-color: var(--primary-dark);
+                        }
+
+            .payment-info {
+                            background-color: rgba(0, 188, 212, 0.1);
+                            border-left: 4px solid var(--primary-color);
+                        }
+
+            footer {
+                            background-color: var(--dark-gray);
+                            color: var(--white);
+                            padding: 2rem 0;
+                        }
+
+            .fee-display {
+                            font-size: 1.8rem;
+                            font-weight: bold;
+                            color: var(--primary-color);
+                        }
+
+            .date-display {
+                            background-color: var(--light-gray);
+                            border: none;
+                            font-weight: 500;
+                        }
+
+    .card-selection-container {
+        margin-bottom: 1rem;
+    }
+
+    .card-option {
+        flex: 0 0 auto;
+    }
+
+    .card-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-radius: 8px;
+        min-width: 90px;
+        transition: all 0.3s ease;
+    }
+
+    .card-icon {
+        margin-bottom: 5px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .btn-check:checked + .card-label {
+        background-color: #e9f0ff;
+        border-color: #0d6efd;
+        color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+        </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="index.html" class="navbar-brand d-flex flex-column align-items-start px-4 px-lg-5">
+        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>SARASAVI</h2>
+        <h5 class="m-0 text-primary">Higher Education Institute</h5>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="index.html" class="nav-item nav-link">Home</a>
+            <a href="about.html" class="nav-item nav-link">About</a>
+            <a href="subjects.html" class="nav-item nav-link">Subjects</a>
+            <a href="instructors.html" class="nav-item nav-link active">Instructors</a>
+            <a href="students.html" class="nav-item nav-link" id="studentNavItem">Students</a>
+            <a href="classes.html" class="nav-item nav-link" id="classNavItem">Classes</a>
+            <a href="attendance.html" class="nav-item nav-link" id="attendanceNavItem">Attendance</a>
+            <div class="nav-item dropdown" id="pageDown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="instructor_schedule.html" class="dropdown-item">Schedules</a>
+                    <a href="payment.html" class="dropdown-item">Payments</a>
+                    <a href="testimonial.html" class="dropdown-item" >Attendance</a>
+                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                    <a href="404.html" class="dropdown-item">404 Page</a>
+                </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a href="payment.html" class="nav-item nav-link active" id="paymentNavItem">Payment</a>
+            <a href="student_profile.html" class="nav-item nav-link" id="studentProfile">Profile</a>
+            <a href="instructor_profile.html" class="nav-item nav-link" id="instructorProfile">Profile</a>
+            <a href="user_login.html" class="nav-item nav-link">Log out</a>
+        </div>
+
+    </div>
+</nav>
+
+<button onclick="payNow()" id="payNowBtn">Pay Now</button>
+
+
+<section class="py-5">
+    <div class="container" id="customPaymentForm" style="display: none;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        Class Payment
+                    </div>
+                    <div class="card-body">
+                        <div class="alert payment-info mb-4" role="alert">
+                            <p class="mb-0">Please select your subject and grade, then complete the payment to secure your spot in the class.</p>
+                        </div>
+
+                        <form id="paymentForm">
+                            <!-- Date Display -->
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <label for="currentDate" class="form-label">Payment Date</label>
+                                    <input type="text" class="form-control date-display" id="currentDate" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Subject and Grade Selection -->
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <label for="subjectSelect" class="form-label">Select Subject</label>
+                                    <select class="form-select" id="subjectSelect" required>
+                                        <option value="" selected disabled>Choose a subject...</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="gradeSelect" class="form-label">Grade</label>
+                                    <input type="text" class="form-control" id="gradeSelect"  required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="studentName" class="form-label">Student Name</label>
+                                    <input type="text" class="form-control" id="studentName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="monthSelect" class="form-label">Select Month</label>
+                                    <select class="form-select" id="monthSelect" required>
+                                        <option value="" selected disabled>Choose a month...</option>
+                                        <option value="january">January</option>
+                                        <option value="february">February</option>
+                                        <option value="march">March</option>
+                                        <option value="april">April</option>
+                                        <option value="may">May</option>
+                                        <option value="june">June</option>
+                                        <option value="july">July</option>
+                                        <option value="august">August</option>
+                                        <option value="september">September</option>
+                                        <option value="october">October</option>
+                                        <option value="november">November</option>
+                                        <option value="december">December</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Fee Display -->
+                            <div class="card mb-4 bg-light">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5 class="mb-3">Class Fee:</h5>
+                                        </div>
+                                        <div class="col-md-6 text-end">
+                                            <span class="fee-display" id="feeDisplay"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Payment Details -->
+                            <h5 class="mb-4">Card Payment Details</h5>
+
+
+
+                            <div class="row mb-3">
+                                <div class="col-md-12 mb-3">
+                                    <label for="cardName" class="form-label">Name on Card</label>
+                                    <input type="text" class="form-control" id="cardName" placeholder="John Doe" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12 mb-3">
+                                    <label for="cardNumber" class="form-label">Card Number</label>
+                                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <label for="expiryDate" class="form-label">Expiration Date</label>
+                                    <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12 mb-3">
+                                    <label for="email" class="form-label">Email (Receipt)</label>
+                                    <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="saveInfo">
+                                <label class="form-check-label" for="saveInfo">
+                                    Save this card for future payments
+                                </label>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-lg w-100" id="payBtn">Complete Payment</button>
+
+                            <div class="text-center mt-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-lock"></i> Your payment information is secure and encrypted
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/payment.js"></script>
+<script src="js/navbar_settings.js"></script>
+<script>
+
+        const merchantId = "1230055";
+
+        const payment = {
+        sandbox: true,
+        merchant_id: merchantId,
+        return_url: "http://localhost:8080/return",
+        cancel_url: "http://localhost:8080/cancel",
+        notify_url: "http://localhost:8080/notify",
+        order_id: "ORDER123",
+        items: "Smart Tuition Class",
+        amount: "1000.00",
+        currency: "LKR",
+        first_name: "Rasanduni",
+        last_name: "Perera",
+        email: "rasanduni@example.com",
+        phone: "0771234567",
+        address: "123, Rathnapura",
+        city: "Rathnapura",
+        country: "Sri Lanka"
+    };
+
+        function payNow() {
+        document.getElementById("customPaymentForm").style.display = "none"; // hide initially
+        payhere.startPayment(payment);
+            setTimeout(() => {
+                document.getElementById("customPaymentForm").style.display = "block";
+                document.getElementById("payNowBtn").style.display = "none";
+            }, 20);
+    }
+
+        payhere.onCompleted = function (orderId) {
+        alert("Payment completed! Order ID: " + orderId);
+    };
+
+        payhere.onDismissed = function () {
+        alert("Payment dismissed.");
+    };
+
+        payhere.onError = function (error) {
+        console.error("PayHere error:", error);
+        alert("Payment failed or unauthorized. Please try manual payment.");
+        document.getElementById("customPaymentForm").style.display = "block"; // Show custom form
+    };
+
+        payhere.onDismissed = function onDismissed() {
+            alert("Payment dismissed (unauthorized or closed). Showing alternate form...");
+
+            setTimeout(() => {
+                document.getElementById("customPaymentForm").style.display = "block";
+            }, 2000); // Show after 2 seconds
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateField = document.getElementById('currentDate');
+            const today = new Date();
+
+            // Format date as YYYY-MM-DD
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+
+            dateField.value = `${year}-${month}-${day}`;
+        });
+
+        // Class fees based on subject and grade
+        const classFees = {
+            accounting: {
+                grade10: 65,
+                grade11: 70,
+                grade12: 75,
+                grade13: 80
+            },
+            mathematics: {
+                grade10: 70,
+                grade11: 75,
+                grade12: 80,
+                grade13: 85
+            },
+            physics: {
+                grade10: 70,
+                grade11: 75,
+                grade12: 80,
+                grade13: 85
+            },
+            chemistry: {
+                grade10: 70,
+                grade11: 75,
+                grade12: 80,
+                grade13: 85
+            },
+            biology: {
+                grade10: 70,
+                grade11: 75,
+                grade12: 80,
+                grade13: 85
+            },
+            business: {
+                grade10: 65,
+                grade11: 70,
+                grade12: 75,
+                grade13: 80
+            },
+            economics: {
+                grade10: 65,
+                grade11: 70,
+                grade12: 75,
+                grade13: 80
+            },
+            english: {
+                grade10: 60,
+                grade11: 65,
+                grade12: 70,
+                grade13: 75
+            }
+        };
+
+        // Update fee when subject or grade changes
+        const subjectSelect = document.getElementById('subject');
+        const gradeSelect = document.getElementById('grade');
+        const feeDisplay = document.getElementById('feeDisplay');
+        const payButton = document.getElementById('payButton');
+
+        function updateFee() {
+            const subject = subjectSelect.value;
+            const grade = gradeSelect.value;
+
+            if (subject && grade && classFees[subject] && classFees[subject][grade]) {
+                const fee = classFees[subject][grade];
+                feeDisplay.textContent = `$${fee}.00`;
+                payButton.textContent = `Pay $${fee}.00`;
+                payButton.disabled = false;
+            } else {
+                feeDisplay.textContent = '$0.00';
+                payButton.textContent = 'Complete Payment';
+                payButton.disabled = true;
+            }
+        }
+
+        subjectSelect.addEventListener('change', updateFee);
+        gradeSelect.addEventListener('change', updateFee);
+
+        // Form submission
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get selected values
+            const subject = subjectSelect.value;
+            const grade = gradeSelect.value;
+            const fee = classFees[subject][grade];
+
+            // In a real application, this would send payment data to a server
+            alert(`Processing payment of $${fee}.00 for ${subject.charAt(0).toUpperCase() + subject.slice(1)} (${grade.replace('grade', 'Grade ')})`);
+
+            // You would normally redirect to a success page or show a confirmation message
+        });
+
+
+</script>
+
+
+<script src="https://www.payhere.lk/lib/payhere.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</body>
+</html>

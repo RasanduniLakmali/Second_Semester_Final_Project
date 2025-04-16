@@ -33,10 +33,13 @@ public class Instructor {
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
     private List<ClassInstructor> classInstructors;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
 
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
     private List<InstructorSchedule> instructorSchedules;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    private int admin_id;
 }

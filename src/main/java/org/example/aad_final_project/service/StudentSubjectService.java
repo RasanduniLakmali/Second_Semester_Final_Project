@@ -11,5 +11,9 @@ public interface StudentSubjectService {
     List<String> getNames(String studentName);
 
 
-    boolean update(StudentSubjectDTO studentSubjectDTO);
+    StudentSubjectDTO update(StudentSubjectDTO studentSubjectDTO);
+
+    List<String> getSubjectsByEmail(String email);
+
+    List<StudentSubjectDTO> getAll();
 }

@@ -38,7 +38,9 @@ public class Student {
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL)
     private List<PaperMark> paperMarks;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    private int admin_id;
 }

@@ -31,11 +31,45 @@ $("#saveBtn").click(function () {
 
         success: function (data) {
             console.log(data);
-            alert("Instructor saved successfully.");
+            Swal.fire({
+                icon: 'success',
+                title: 'Saved!',
+                text: 'Instructor saved successfully.',
+                confirmButtonColor: '#3085d6'
+            });
             fetchInstructorData();
         },
-        error: function () {
-            alert("Instructor not saved.");
+        error: function (xhr) {
+            console.log("Error Response:", xhr);
+
+            if (xhr.status === 400 && Array.isArray(xhr.responseJSON)) {
+                let messages = xhr.responseJSON;
+
+                let messageHtml = "<ul>";
+                messages.forEach(msg => {
+                    messageHtml += `<li>${msg}</li>`;
+                });
+                messageHtml += "</ul>";
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Validation Errors",
+                    html: messageHtml
+                });
+
+            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseJSON.message
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred."
+                });
+            }
         }
     })
 })
@@ -212,16 +246,45 @@ $("#subjectCode2").change(function () {
 })
 
 
-$('#adminName').change(function () {
+$('#adminName2').change(function () {
+
     const adminName = $(this).val();
 
     if (!adminName) return;
 
     $.ajax({
-        url: `http://localhost:8080/api/v1/admin/getAdmin/${adminName}`,
+        url: `http://localhost:8080/api/v1/admin/getAdmin/ADMIN/${adminName}`,
         method: "GET",
 
         success: function (data) {
+            console.log(data)
+            $("#adminId2").val(data);
+        },
+
+        error: function (xhr) {
+            if (xhr.status === 404) {
+                alert("Admin not found!");
+                $("#adminId").val('');
+            } else {
+                alert("Error loading admin ID.");
+            }
+        }
+    });
+});
+
+
+$('#adminName').change(function () {
+
+    const adminName = $(this).val();
+
+    if (!adminName) return;
+
+    $.ajax({
+        url: `http://localhost:8080/api/v1/admin/getAdmin/ADMIN/${adminName}`,
+        method: "GET",
+
+        success: function (data) {
+            console.log(data)
             $("#adminId").val(data);
         },
 
@@ -237,11 +300,10 @@ $('#adminName').change(function () {
 });
 
 
+
 /*------------------------Show update form-------------------------*/
 
 $(document).on("click", "#editBtn", function () {
-
-    loadAdmins();
 
 
     // Get the parent row of the clicked edit button
@@ -269,12 +331,12 @@ $(document).on("click", "#editBtn", function () {
             $("#adminId2").val(data.admin_id);
             $("#imageUrl").val(data.image)
 
-            // Get Admin Name and Set It
+
             $.ajax({
                 url: `http://localhost:8080/api/v1/admin/getAdminName/${data.admin_id}`,
                 method: "GET",
                 success: function (adminData) {
-                    $("#adminName2").val(adminData).change(); // Ensure dropdown updates
+                    $("#adminName2").val(adminData).change();
                 },
                 error: function () {
                     console.log("Error fetching admin name.");
@@ -324,8 +386,37 @@ $("#updateBtn").click(function () {
             fetchInstructorData();
             clearFields();
         },
-        error: function () {
-            alert("Instructor not updated.");
+        error: function (xhr) {
+            console.log("Error Response:", xhr);
+
+            if (xhr.status === 400 && Array.isArray(xhr.responseJSON)) {
+                let messages = xhr.responseJSON;
+
+                let messageHtml = "<ul>";
+                messages.forEach(msg => {
+                    messageHtml += `<li>${msg}</li>`;
+                });
+                messageHtml += "</ul>";
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Validation Errors",
+                    html: messageHtml
+                });
+
+            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseJSON.message
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred."
+                });
+            }
         }
     })
 })
@@ -481,5 +572,23 @@ $("#assignBtn").click(function () {
             alert('Error while fetching instructor ID.');
         }
     });
+});
+
+
+$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+        const inputValue = $(this).val().trim().toLowerCase();
+
+        $("#instructorTableBody tr").each(function () {
+            const subjectName = $(this).find("td").eq(0).text().trim().toLowerCase();
+
+            if (subjectName.includes(inputValue)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
 });
 

@@ -1,8 +1,6 @@
 package org.example.aad_final_project.service.impl;
 
-import org.example.aad_final_project.dto.ClassDTO;
 import org.example.aad_final_project.dto.ScheduleDTO;
-import org.example.aad_final_project.entity.Admin;
 import org.example.aad_final_project.entity.ClassEntity;
 import org.example.aad_final_project.entity.Schedule;
 import org.example.aad_final_project.repo.ClassRepo;
@@ -11,13 +9,12 @@ import org.example.aad_final_project.service.ScheduleService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -48,6 +45,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             schedule.setEnd_time(scheduleDTO.getEnd_time());
             schedule.setInstructor_name(scheduleDTO.getInstructor_name());
             schedule.setSubject_name(scheduleDTO.getSubject_name());
+            schedule.setSchedule_day(scheduleDTO.getSchedule_day());
             scheduleRepo.save(schedule);
             return true;
         }
@@ -80,6 +78,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             schedule.setClass_name(scheduleDTO.getClass_name());
             schedule.setInstructor_name(scheduleDTO.getInstructor_name());
             schedule.setSubject_name(scheduleDTO.getSubject_name());
+            schedule.setSchedule_day(scheduleDTO.getSchedule_day());
             scheduleRepo.save(schedule);
             return true;
         }
@@ -96,5 +95,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         return false;
     }
 
+    @Override
+    public ScheduleDTO getNearestScheduleForGrade(String grade) {
+        List<ScheduleDTO> list = scheduleRepo.findNearestScheduleByGrade(grade, PageRequest.of(0, 1));
+        return list.isEmpty() ? null : list.get(0);
+    }
 
 }

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks - Accounting Grade 12</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00c2cb;
+            --primary-dark: #00a7af;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+        }
+
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0 !important;
+            padding: 15px 20px;
+            font-weight: 600;
+        }
+
+        .table-header {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .student-info {
+            background-color: #e9f9fa;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+        }
+
+        .badge-warning {
+            background-color: #ffc107;
+        }
+
+        .badge-danger {
+            background-color: #dc3545;
+        }
+
+        .mark-highlight {
+            font-weight: 600;
+        }
+
+        .overall-grade {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .back-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="index.html" class="navbar-brand d-flex flex-column align-items-start px-4 px-lg-5">
+        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>SARASAVI</h2>
+        <h5 class="m-0 text-primary">Higher Education Institute</h5>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="index.html" class="nav-item nav-link">Home</a>
+            <a href="about.html" class="nav-item nav-link">About</a>
+            <a href="subjects.html" class="nav-item nav-link">Subjects</a>
+            <a href="instructors.html" class="nav-item nav-link active">Instructors</a>
+            <a href="students.html" class="nav-item nav-link" id="studentNavItem">Students</a>
+            <a href="classes.html" class="nav-item nav-link" id="classNavItem">Classes</a>
+            <a href="classes.html" class="nav-item nav-link" id="attendanceNavItem">Attendance</a>
+            <div class="nav-item dropdown" id="pageDown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="instructor_schedule.html" class="dropdown-item">Schedules</a>
+                    <a href="payment.html" class="dropdown-item">Payments</a>
+                    <a href="testimonial.html" class="dropdown-item">Attendance</a>
+                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                    <a href="404.html" class="dropdown-item">404 Page</a>
+                </div>
+            </div>
+            <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a href="student_profile.html" class="nav-item nav-link" id="studentProfile">Profile</a>
+            <a href="instructor_profile.html" class="nav-item nav-link" id="instructorProfile">Profile</a>
+            <a href="user_login.html" class="nav-item nav-link">Log out</a>
+        </div>
+
+    </div>
+</nav>
+<!-- Navbar End -->
+
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0"></h3>
+
+                </div>
+                <div class="card-body">
+                    <div class="student-info rounded">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1" id="stName"><strong>Student Name:</strong> </p>
+                                <p class="mb-1" id="grade"><strong>Grade:</strong></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1" id="instName"><strong>Instructor:</strong> </p>
+                                <p class="mb-1" id="term_name"><strong>Year/Term:</strong></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-header">
+                            <tr>
+                                <th>Assessment</th>
+                                <th>Max Marks</th>
+                                <th>Marks Obtained</th>
+
+                            </tr>
+                            </thead>
+                            <tbody id="marksTableBody">
+
+                            </tbody>
+                            <tfoot class="table-light">
+                            <tr>
+<!--                                <td colspan="3" class="text-end"><strong>Overall Average:</strong></td>-->
+<!--                                <td colspan="3" class="overall-grade">83% (A Grade)</td>-->
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-primary back-button" onclick="window.history.back();">
+                            <i class="bi bi-arrow-left"></i> Back to Class Page
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/student_myClass.js"></script>
+<script src="js/navbar_settings.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

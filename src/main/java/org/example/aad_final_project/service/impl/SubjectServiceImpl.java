@@ -1,7 +1,7 @@
 package org.example.aad_final_project.service.impl;
 
 import org.example.aad_final_project.dto.SubjectDTO;
-import org.example.aad_final_project.entity.Admin;
+import org.example.aad_final_project.entity.User;
 import org.example.aad_final_project.entity.Subject;
 import org.example.aad_final_project.repo.AdminRepo;
 import org.example.aad_final_project.repo.SubjectRepo;
@@ -32,7 +32,7 @@ public class SubjectServiceImpl implements SubjectService {
          Subject subject = modelMapper.map(subjectDTO, Subject.class);
 
         // Fetch Admin entity from database
-        Optional<Admin> optionalAdmin = adminRepo.findById(Integer.valueOf(subjectDTO.getAdmin_id()));
+        Optional<User> optionalAdmin = adminRepo.findById(Integer.valueOf(subjectDTO.getAdmin_id()));
 
         if (optionalAdmin.isPresent()) {
             subject.setAdmin(optionalAdmin.get()); // Set the Admin entity
@@ -46,15 +46,21 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public List<SubjectDTO> getAllSubjects() {
-//        List<Subject> subjects = subjectRepo.findAll();
-//        System.out.println(subjects);
-//        return subjects.stream()
-//                .map(student -> modelMapper.map(subjects, SubjectDTO.class))
-//                .collect(Collectors.toList());
+        List<Subject> subjects = subjectRepo.findAll();
 
-        return modelMapper.map(subjectRepo.findAll(),
-                new TypeToken<List<SubjectDTO>>() {}.getType());
+        return subjects.stream().map(subject -> {
+            SubjectDTO dto = modelMapper.map(subject, SubjectDTO.class);
+
+            // Manually set admin_id
+            if (subject.getAdmin() != null) {
+                dto.setAdmin_id(subject.getAdmin().getId());
+            }
+
+            return dto;
+        }).collect(Collectors.toList());
     }
+
+
 
     @Override
     public boolean updateSubject(SubjectDTO subjectDTO) {
@@ -67,6 +73,8 @@ public class SubjectServiceImpl implements SubjectService {
             subject.setSubject_code(subjectDTO.getSubject_code());
             subject.setAdmin(adminRepo.findById(Integer.valueOf(subjectDTO.getAdmin_id())).orElse(null));
             subject.setGrade_range(subjectDTO.getGrade_range());
+            subject.setTime_duration(subjectDTO.getTime_duration());
+            subject.setFees(subjectDTO.getFees());
 
             subjectRepo.save(subject);
             return true;

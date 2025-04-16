@@ -1,7 +1,8 @@
 package org.example.aad_final_project.service.impl;
 
 import org.example.aad_final_project.dto.ClassDTO;
-import org.example.aad_final_project.entity.Admin;
+import org.example.aad_final_project.dto.StudentMyClassDTO;
+import org.example.aad_final_project.entity.User;
 import org.example.aad_final_project.entity.ClassEntity;
 import org.example.aad_final_project.repo.AdminRepo;
 import org.example.aad_final_project.repo.ClassRepo;
@@ -11,6 +12,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public class ClassServiceImpl implements ClassService {
         ClassEntity classEntity = modelMapper.map(classDTO, ClassEntity.class);
 
         // Fetch Admin entity from database
-        Optional<Admin> optionalAdmin = adminRepo.findById(Integer.valueOf(classDTO.getAdmin_id()));
+        Optional<User> optionalAdmin = adminRepo.findById(Integer.valueOf(classDTO.getAdmin_id()));
 
         if (optionalAdmin.isPresent()) {
             classEntity.setAdmin(optionalAdmin.get()); // Set the Admin entity
@@ -64,6 +66,7 @@ public class ClassServiceImpl implements ClassService {
             classEntity.setHall_number(classDTO.getHall_number());
             classEntity.setAdmin(adminRepo.findById(Integer.valueOf(classDTO.getAdmin_id())).orElse(null));
             classEntity.setAdmin_name(classDTO.getAdmin_name());
+            classEntity.setClass_fee(classDTO.getClass_fee());
 
             classRepo.save(classEntity);
             return true;
@@ -92,4 +95,35 @@ public class ClassServiceImpl implements ClassService {
     public String getClassId(String className) {
         return classRepo.findByClass_name(className);
     }
+
+    @Override
+    public List<StudentMyClassDTO> getClassDetails(String classId,LocalDate scheduleDate) {
+       List<StudentMyClassDTO> details = classRepo.findByClassAndSubject(classId,scheduleDate);
+
+        System.out.println(details.toString());
+
+       return details;
+    }
+
+    @Override
+    public String getClassFee(String className) {
+        return classRepo.findClassFee(className);
+    }
+
+    @Override
+    public long getClassesCount() {
+        return classRepo.count();
+    }
+
+    @Override
+    public String getUniqueClass(String studentName) {
+        String class_name = classRepo.findByStudent_name(studentName);
+        System.out.println(class_name);
+        if (class_name != null) {
+            return class_name;
+        }
+        return null;
+    }
+
+
 }

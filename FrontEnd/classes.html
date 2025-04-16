@@ -35,7 +35,7 @@
             background-color: #f4f7f6;
         }
         .page-header {
-            background-color: #4a90e2;
+            background-color: #00BCD4;
             color: white;
             padding: 3rem 0;
         }
@@ -63,11 +63,11 @@
             color: #212529;
         }
         .btn-outline-primary {
-            border-color: #4a90e2;
-            color: #4a90e2;
+            border-color: #00BCD4;
+            color: #00ACC1;
         }
         .btn-outline-primary:hover {
-            background-color: #4a90e2;
+            background-color: #00BCD4;
             color: white;
         }
         .status-bar {
@@ -119,23 +119,28 @@
             <a href="about.html" class="nav-item nav-link">About</a>
             <a href="subjects.html" class="nav-item nav-link">Subjects</a>
             <a href="instructors.html" class="nav-item nav-link">Instructors</a>
-            <a href="students.html" class="nav-item nav-link">Students</a>
+            <a href="students.html" class="nav-item nav-link" id="studentNavItem">Students</a>
             <a href="classes.html" class="nav-item nav-link active">Classes</a>
-            <div class="nav-item dropdown">
+            <a href="attendance.html" class="nav-item nav-link" id="attendanceNavItem">Attendance</a>
+            <div class="nav-item dropdown" id="pageDown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                 <div class="dropdown-menu fade-down m-0">
-                    <a href="instructors.html" class="dropdown-item">Schedules</a>
-                    <a href="testimonial.html" class="dropdown-item">Payments</a>
-                    <a href="testimonial.html" class="dropdown-item">Attendance</a>
-                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                    <a href="404.html" class="dropdown-item">404 Page</a>
+                    <a href="instructor_schedule.html" class="dropdown-item">Schedules</a>
+                    <a href="payment.html" class="dropdown-item">Payments</a>
+                    <a href="testimonial.html" class="dropdown-item" >Attendance</a>
                 </div>
             </div>
             <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a href="payment.html" class="nav-item nav-link" id="paymentNavItem">Payment</a>
+            <a href="student_profile.html" class="nav-item nav-link" id="studentProfile">Profile</a>
+            <a href="instructor_profile.html" class="nav-item nav-link" id="instructorProfile">Profile</a>
+            <a href="user_login.html" class="nav-item nav-link">Log out</a>
         </div>
 
     </div>
 </nav>
+
+
 
 <!-- Header Start -->
 <div class="page-header text-center">
@@ -153,84 +158,118 @@
 
 
 <!-- Classes Section -->
+
 <div class="container py-5">
-    <div class="row g-4">
+    <div class="row g-4" id="subjectContainer">
+
         <!-- Mathematics Tuition -->
         <div class="col-lg-4 col-md-6">
             <div class="card class-card">
                 <div class="card-body">
-                    <span class="badge badge-ongoing position-absolute top-0 end-0 mt-3 me-3">Ongoing</span>
-                    <h5 class="card-title mt-2">Mathematics Tuition</h5>
-                    <p class="text-muted mb-3">
-                        <i class="fas fa-chalkboard-teacher me-2"></i>Advanced Math Course
-                    </p>
+                    <h5 class="card-title mt-2" id="subjectName2"></h5>
+
                     <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-clock me-2"></i>Mon/Wed 5-7 PM</li>
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Main Study Hall</li>
-                        <li><i class="fas fa-user-graduate me-2"></i>Grade 11-12 Advanced</li>
+                        <li class="mb-2" id="scheduleDate2"><i class="fas fa-clock me-2"></i></li>
+                        <li class="mb-2" id="time2"><i class="fas fa-clock me-2"></i></li>
+                        <li class="mb-2" id="hallNumber2"><i class="fas fa-map-marker-alt me-2"></i></li>
+                        <li id="className2"><i class="fas fa-user-graduate me-2"></i></li>
                     </ul>
                     <div class="status-bar">
                         <span class="paid-status paid">Paid</span>
                         <div class="btn-group" role="group">
-                            <a href="math-marks.html" class="btn btn-outline-primary btn-sm">View Marks</a>
-                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+
+                            <a href="classWise_details.html" class="btn btn-outline-primary btn-sm" id="viewDetailBtn">View Details</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Science Tuition -->
-        <div class="col-lg-4 col-md-6">
-            <div class="card class-card">
-                <div class="card-body">
-                    <span class="badge badge-upcoming position-absolute top-0 end-0 mt-3 me-3">Upcoming</span>
-                    <h5 class="card-title mt-2">Science Tuition</h5>
-                    <p class="text-muted mb-3">
-                        <i class="fas fa-chalkboard-teacher me-2"></i>Advanced Science Course
-                    </p>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-clock me-2"></i>Tue/Thu 4-6 PM</li>
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Science Lab</li>
-                        <li><i class="fas fa-user-graduate me-2"></i>Grade 10-11 Advanced</li>
-                    </ul>
-                    <div class="status-bar">
-                        <span class="paid-status unpaid">Unpaid</span>
-                        <div class="btn-group" role="group">
-                            <a href="science-marks.html" class="btn btn-outline-primary btn-sm">View Marks</a>
-                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        &lt;!&ndash; Science Tuition &ndash;&gt;-->
+<!--        <div class="col-lg-4 col-md-6">-->
+<!--            <div class="card class-card">-->
+<!--                <div class="card-body">-->
+<!--                    <span class="badge badge-upcoming position-absolute top-0 end-0 mt-3 me-3">Upcoming</span>-->
+<!--                    <h5 class="card-title mt-2">Science Tuition</h5>-->
+<!--                    -->
+<!--                    <ul class="list-unstyled">-->
+<!--                        <li class="mb-2"><i class="fas fa-clock me-2"></i>Tue/Thu 4-6 PM</li>-->
+<!--                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Science Lab</li>-->
+<!--                        <li><i class="fas fa-user-graduate me-2"></i>Grade 10-11 Advanced</li>-->
+<!--                    </ul>-->
+<!--                    <div class="status-bar">-->
+<!--                        <span class="paid-status unpaid">Unpaid</span>-->
+<!--                        <div class="btn-group" role="group">-->
+<!--                            <a href="science-marks.html" class="btn btn-outline-primary btn-sm">View Marks</a>-->
+<!--                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <!-- Computer Science Tuition -->
-        <div class="col-lg-4 col-md-6">
-            <div class="card class-card">
-                <div class="card-body">
-                    <span class="badge badge-completed position-absolute top-0 end-0 mt-3 me-3">Completed</span>
-                    <h5 class="card-title mt-2">Computer Science Tuition</h5>
-                    <p class="text-muted mb-3">
-                        <i class="fas fa-chalkboard-teacher me-2"></i>Programming Course
-                    </p>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-clock me-2"></i>Sat 3-5 PM</li>
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Computer Lab</li>
-                        <li><i class="fas fa-user-graduate me-2"></i>Grade 9-10 Beginner</li>
-                    </ul>
-                    <div class="status-bar">
-                        <span class="paid-status paid">Paid</span>
-                        <div class="btn-group" role="group">
-                            <a href="cs-marks.html" class="btn btn-outline-primary btn-sm">View Marks</a>
-                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
-                        </div>
+<!--        &lt;!&ndash; Computer Science Tuition &ndash;&gt;-->
+<!--        <div class="col-lg-4 col-md-6">-->
+<!--            <div class="card class-card">-->
+<!--                <div class="card-body">-->
+<!--                    <span class="badge badge-completed position-absolute top-0 end-0 mt-3 me-3">Completed</span>-->
+<!--                    <h5 class="card-title mt-2">Computer Science Tuition</h5>-->
+<!--                   -->
+<!--                    <ul class="list-unstyled">-->
+<!--                        <li class="mb-2"><i class="fas fa-clock me-2"></i>Sat 3-5 PM</li>-->
+<!--                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Computer Lab</li>-->
+<!--                        <li><i class="fas fa-user-graduate me-2"></i>Grade 9-10 Beginner</li>-->
+<!--                    </ul>-->
+<!--                    <div class="status-bar">-->
+<!--                        <span class="paid-status paid">Paid</span>-->
+<!--                        <div class="btn-group" role="group">-->
+<!--                            <a href="cs-marks.html" class="btn btn-outline-primary btn-sm">View Marks</a>-->
+<!--                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</div>
+
+
+<div class="container p-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Daily Study Planner</h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="freeHours" class="form-label fw-bold">Enter your free hours for today:</label>
+                    <div class="input-group">
+                        <input type="number" id="freeHours" min="1" max="24" class="form-control" placeholder="Hours available">
+                        <button onclick="generatePlanner()" class="btn btn-primary">Generate Planner</button>
                     </div>
                 </div>
             </div>
+
+            <div id="plannerLoading" style="display: none;">
+                <div class="d-flex justify-content-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="plannerResult"></div>
         </div>
     </div>
 </div>
+
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/navbar_settings.js"></script>
+<script src="js/student_myClass.js"></script>
+<script src="js/study_planner.js"></script>
+
+
 
 </body>
 </html>

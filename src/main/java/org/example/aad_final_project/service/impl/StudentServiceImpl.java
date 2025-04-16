@@ -1,13 +1,22 @@
 package org.example.aad_final_project.service.impl;
 
+import org.example.aad_final_project.dto.NewStudentDTO;
 import org.example.aad_final_project.dto.StudentDTO;
-import org.example.aad_final_project.entity.Admin;
+import org.example.aad_final_project.dto.StudentMyClassDTO;
+import org.example.aad_final_project.entity.NewStudent;
+import org.example.aad_final_project.entity.Role;
+import org.example.aad_final_project.entity.User;
 import org.example.aad_final_project.entity.Student;
 import org.example.aad_final_project.repo.AdminRepo;
+import org.example.aad_final_project.repo.NewStudentRepo;
 import org.example.aad_final_project.repo.StudentRepo;
+import org.example.aad_final_project.repo.UserRepository;
 import org.example.aad_final_project.service.StudentService;
+import org.example.aad_final_project.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,21 +35,62 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private NewStudentRepo newStudentRepo;
+
     @Override
-    public boolean save(StudentDTO studentDTO) {
+    public StudentDTO save(StudentDTO studentDTO) {
+
+        System.out.println(studentDTO.toString());
+
+        User admin = adminRepo.findById(studentDTO.getAdmin_id())
+                .orElseThrow(() -> new RuntimeException("Admin not found with ID: " + studentDTO.getAdmin_id()));
+
 
         Student student = modelMapper.map(studentDTO, Student.class);
 
-        Optional<Admin> optionalAdmin = adminRepo.findById(Integer.valueOf(studentDTO.getAdminId()));
+        Optional<User> optionalAdmin = adminRepo.findById(Integer.valueOf(studentDTO.getUserId()));
 
-        if (optionalAdmin.isPresent()) {
-            student.setAdmin(optionalAdmin.get());
-            studentRepo.save(student);
-            return true;
-        } else {
-            System.out.println("Admin not found with ID: " + studentDTO.getAdminId());
-            return false;
-        }
+        User user = new User();
+        user.setName(studentDTO.getStudent_name());
+        user.setEmail(studentDTO.getEmail());
+        user.setMobile(studentDTO.getPhone());
+        user.setRole(Role.STUDENT);
+
+        User savedUser = userRepository.save(user);
+
+        student.setAddress(studentDTO.getAddress());
+        student.setAge(studentDTO.getAge());
+        student.setEmail(studentDTO.getEmail());
+        student.setImage(studentDTO.getImage());
+        student.setPhone(studentDTO.getPhone());
+        student.setSchool(studentDTO.getSchool());
+        student.setStudent_name(studentDTO.getStudent_name());
+        student.setUser(savedUser);
+        student.setAdmin_id(studentDTO.getAdmin_id());
+
+
+
+
+        Student savedStudent = studentRepo.save(student);
+
+        StudentDTO responseDTO = new StudentDTO();
+        responseDTO.setStudent_id(savedStudent.getStudent_id());
+        responseDTO.setUserId(savedStudent.getStudent_id());
+        return responseDTO;
+
+//        if (optionalAdmin.isPresent() && user.isPresent()) {
+//            student.setAdmin(optionalAdmin.get());
+//            student.setUser(user.get());
+//            studentRepo.save(student);
+//            return true;
+//        } else {
+//            System.out.println("Admin not found with ID: " + studentDTO.getAdminId());
+//            return false;
+//        }
     }
 
     @Override
@@ -58,8 +108,8 @@ public class StudentServiceImpl implements StudentService {
             Student student = optionalStudent.get();
             StudentDTO studentDTO = modelMapper.map(student, StudentDTO.class);
 
-            if (student.getAdmin() != null) {
-                studentDTO.setAdminId(String.valueOf(student.getAdmin().getAdmin_id())); // Manually set adminId
+            if (student.getUser() != null) {
+                studentDTO.setUserId(Integer.parseInt(String.valueOf(student.getUser().getId()))); // Manually set adminId
             }
 
             return studentDTO;
@@ -79,7 +129,7 @@ public class StudentServiceImpl implements StudentService {
             student.setEmail(studentDTO.getEmail());
             student.setAddress(studentDTO.getAddress());
             student.setSchool(studentDTO.getSchool());
-            student.setAdmin(adminRepo.findById(Integer.valueOf(studentDTO.getAdminId())).orElse(null));
+            student.setAdmin_id(studentDTO.getAdmin_id());
 
             if (studentDTO.getImage() != null) {
                 student.setImage(studentDTO.getImage()); // Only update image if new one is provided
@@ -119,6 +169,54 @@ public class StudentServiceImpl implements StudentService {
    @Override
     public List<StudentDTO> getStudents(String instructorName, int classId) {
         return studentRepo.findStudents(instructorName, classId);
+    }
+
+    @Override
+    public Integer getStudentIdByEmail(String email) {
+        return studentRepo.findStudentIdByEmail(email);
+    }
+
+    @Override
+    public StudentMyClassDTO getStudentDetails(Integer studentId) {
+        Pageable pageable = PageRequest.of(0, 1);
+        List<StudentMyClassDTO> results = studentRepo.findStudentDetails(studentId, pageable);
+
+        return results.isEmpty() ? null : results.get(0);
+    }
+
+    @Override
+    public String getName(Integer studentId) {
+        String studentName = studentRepo.findStudentNameById(studentId);
+
+        if (studentName != null) {
+            return studentName;
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean saveNewStudent(NewStudentDTO newStudentDTO) {
+        NewStudent newStudent = modelMapper.map(newStudentDTO, NewStudent.class);
+        newStudentRepo.save(newStudent);
+        return true;
+    }
+
+    @Override
+    public StudentDTO getStudentProfile(String email) {
+        Student student = studentRepo.findByEmail(email);
+
+        if (student != null) {
+            StudentDTO studentDTO = modelMapper.map(student, StudentDTO.class);
+            return studentDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public long getStudentCount() {
+        return studentRepo.count();
     }
 }
 

@@ -164,9 +164,9 @@
             <a href="about.html" class="nav-item nav-link">About</a>
             <a href="subjects.html" class="nav-item nav-link">Subjects</a>
             <a href="instructors.html" class="nav-item nav-link">Instructors</a>
-            <a href="students.html" class="nav-item nav-link active">Students</a>
+            <a href="students.html" class="nav-item nav-link" id="studentNavItem">Students</a>
             <a href="classes.html" class="nav-item nav-link">Classes</a>
-            <div class="nav-item dropdown">
+            <div class="nav-item dropdown" id="pageDown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                 <div class="dropdown-menu fade-down m-0">
                     <a href="instructors.html" class="dropdown-item">Schedules</a>
@@ -177,6 +177,9 @@
                 </div>
             </div>
             <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <a href="student_profile.html" class="nav-item nav-link active" id="studentProfile">Profile</a>
+            <a href="instructor_profile.html" class="nav-item nav-link" id="instructorProfile">Profile</a>
+            <a href="user_login.html" class="nav-item nav-link">Log out</a>
         </div>
 
     </div>
@@ -187,9 +190,9 @@
 <div class="container">
     <div class="row profile-container">
         <div class="col-md-3 profile-sidebar">
-            <img src="/api/placeholder/120/120" alt="Profile" class="profile-image">
-            <h5 class="profile-name">Edogaru</h5>
-            <p class="profile-email">edogaru@mail.com.my</p>
+            <img src="" alt="Profile" class="profile-image">
+            <h5 class="profile-name"></h5>
+            <p class="profile-email"></p>
             <div class="d-grid gap-2">
                 <button class="btn btn-outline-secondary btn-sm" type="button">Change Photo</button>
             </div>
@@ -198,14 +201,18 @@
             <h4 class="profile-heading">My Profile</h4>
             <form>
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="firstname" class="form-label">Firstname</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="first name">
+                    <div class="col-12">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="first name">
                     </div>
-                    <div class="col-md-6">
-                        <label for="lastname" class="form-label">Lastname</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="surname">
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="text" class="form-control" id="age" placeholder="age">
                     </div>
+
                 </div>
 
                 <div class="row">
@@ -241,12 +248,16 @@
                 </div>
 
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary save-btn">Save Profile</button>
+                    <button type="button" class="btn btn-primary save-btn" id="updateProfile">Save Profile</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/navbar_settings.js"></script>
+<script src="js/student_profile.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 

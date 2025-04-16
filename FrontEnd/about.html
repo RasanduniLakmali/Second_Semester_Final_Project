@@ -82,20 +82,24 @@
                 <a href="about.html" class="nav-item nav-link active">About</a>
                 <a href="subjects.html" class="nav-item nav-link">Subjects</a>
                 <a href="instructors.html" class="nav-item nav-link">Instructors</a>
-                <a href="students.html" class="nav-item nav-link">Students</a>
-                <a href="classes.html" class="nav-item nav-link">Classes</a>
-                <div class="nav-item dropdown">
+                <a href="students.html" class="nav-item nav-link" id="studentNavItem">Students</a>
+                <a href="classes.html" class="nav-item nav-link" id="classNavItem">Classes</a>
+                <a href="attendance.html" class="nav-item nav-link" id="attendanceNavItem">Attendance</a>
+                <div class="nav-item dropdown" id="pageDown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="instructors.html" class="dropdown-item">Schedules</a>
                         <a href="testimonial.html" class="dropdown-item">Payments</a>
-                        <a href="testimonial.html" class="dropdown-item">Attendance</a>
+
                         <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
-                <a href="contact.html" class="nav-item nav-link">Profile</a>
+                <a href="payment.html" class="nav-item nav-link" id="paymentNavItem">Payment</a>
+                <a href="student_profile.html" class="nav-item nav-link" id="studentProfile">Profile</a>
+                <a href="user_login.html" class="nav-item nav-link">Log out</a>
+                <a href="instructor_profile.html" class="nav-item nav-link" id="instructorProfile">Profile</a>
             </div>
 
         </div>
@@ -312,6 +316,7 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/navbar_settings.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -355,6 +360,7 @@
             // Call the function to load instructors when page loads
             loadInstructors();
         });
+
     </script>
 
     <!-- JavaScript Libraries -->

@@ -2,124 +2,641 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin dashboard</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarasavi Admin Dashboard</title>
     <link href="img/favicon.ico" rel="icon">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-
-
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    <style>
+        :root {
+            --primary-color: #1EB2BC;
+            --secondary-color: #0A7A82;
+            --dark-color: #1A2942;
+            --light-color: #f8f9fa;
+            --sidebar-width: 250px;
+        }
 
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--dark-color);
+            color: white;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar .brand {
+            padding: 20px 15px;
+            background-color: var(--primary-color);
+            text-align: center;
+        }
+
+        .sidebar .brand h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .sidebar .brand h5 {
+            margin: 0;
+            font-size: 14px;
+            color: white;
+        }
+
+        .sidebar .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .sidebar .menu-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .sidebar .menu-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .sidebar .menu-item i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar .menu-item-text {
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .menu-item-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .sidebar .submenu {
+            padding-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .sidebar .submenu.expanded {
+            max-height: 500px;
+        }
+
+        .sidebar .submenu .menu-item {
+            padding: 8px 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header */
+        .top-header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--dark-color);
+        }
+
+        .profile-section img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 20px;
+            height: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(30, 178, 188, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .dashboard-card h3 {
+            font-size: 18px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .dashboard-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .dashboard-card .trend {
+            font-size: 14px;
+            color: #28a745;
+        }
+
+        /* Calendar */
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .calendar-day:hover {
+            background-color: rgba(30, 178, 188, 0.1);
+        }
+
+        .calendar-day.today {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .calendar-day.has-event {
+            border: 2px solid var(--primary-color);
+        }
+
+        /* Quick Actions */
+        .quick-action {
+            background-color: rgba(30, 178, 188, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .quick-action:hover {
+            background-color: rgba(30, 178, 188, 0.2);
+        }
+
+        .quick-action i {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .quick-action p {
+            margin: 0;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .sidebar .menu-item-text {
+                opacity: 0;
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 60px;
+            }
+
+            .sidebar.expanded {
+                width: var(--sidebar-width);
+            }
+
+            .sidebar.expanded .menu-item-text {
+                opacity: 1;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar.expanded {
+                width: var(--sidebar-width);
+            }
+        }
+
+        /* Toggle Button */
+        .toggle-sidebar {
+            cursor: pointer;
+            margin-right: 15px;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0" id="navbar">
-    <a href="index.html" class="navbar-brand d-flex flex-column align-items-start px-4 px-lg-5">
-        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>SARASAVI</h2>
-        <h5 class="m-0 text-primary">Higher Education Institute</h5>
-    </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="admin_dashboard.html" class="nav-item nav-link active">Home</a>
-            <a href="subject_details.html" class="nav-item nav-link">Subjects</a>
-            <a href="instructors_details.html" class="nav-item nav-link">Instructors</a>
-            <a href="students_details.html" class="nav-item nav-link">Students</a>
-            <a href="classes_details.html" class="nav-item nav-link">Classes</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="schedule_details.html" class="dropdown-item">Schedules</a>
-                    <a href="testimonial.html" class="dropdown-item">Payments</a>
-                    <a href="attendance_details.html" class="dropdown-item">Attendance</a>
 
-                </div>
-            </div>
-            <a href="contact.html" class="nav-item nav-link">Contact</a>
-            <a href="admin_profile.html" class="nav-item nav-link">Profile</a>
-        </div>
-
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="brand">
+        <h2><i class="fa fa-book me-2"></i>SARASAVI</h2>
+        <h5>Higher Education Institute</h5>
     </div>
-</nav>
-
-
-<div class="container-fluid p-0 mb-5">
-    <div class="owl-carousel header-carousel position-relative">
-        <div class="owl-carousel-item position-relative">
-            <img class="img-fluid" src="img/carousel-1.jpg" alt="">
-            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
-                <div class="container">
-                    <div class="row justify-content-start">
-                        <div class="col-sm-10 col-lg-8">
-                            <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                            <h1 class="display-3 text-white animated slideInDown">The Best Online Learning Platform</h1>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="menu">
+        <a href="admin_dashboard.html" class="menu-item active">
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="menu-item-text">Dashboard</span>
+        </a>
+        <a href="subject_details.html" class="menu-item">
+            <i class="fas fa-book"></i>
+            <span class="menu-item-text">Subjects</span>
+        </a>
+        <a href="instructors_details.html" class="menu-item">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span class="menu-item-text">Instructors</span>
+        </a>
+        <a href="students_details.html" class="menu-item">
+            <i class="fas fa-user-graduate"></i>
+            <span class="menu-item-text">Students</span>
+        </a>
+        <a href="#" class="menu-item dropdown-toggle" id="classesDropdown">
+            <i class="fas fa-school"></i>
+            <span class="menu-item-text">Classes</span>
+        </a>
+        <div class="submenu" id="classesSubmenu">
+            <a href="classes_details.html" class="menu-item">
+                <i class="fas fa-list"></i>
+                <span class="menu-item-text">Manage Classes</span>
+            </a>
+            <a href="student_subject_details.html" class="menu-item">
+                <i class="fas fa-user-plus"></i>
+                <span class="menu-item-text">Assign Class</span>
+            </a>
+            <a href="class_subject_details.html" class="menu-item">
+                <i class="fas fa-book-open"></i>
+                <span class="menu-item-text">Assign Subject</span>
+            </a>
         </div>
-        <div class="owl-carousel-item position-relative">
-            <img class="img-fluid" src="img/carousel-2.jpg" alt="">
-            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
-                <div class="container">
-                    <div class="row justify-content-start">
-                        <div class="col-sm-10 col-lg-8">
-                            <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                            <h1 class="display-3 text-white animated slideInDown">Get Educated Online From Your Home</h1>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <a href="#" class="menu-item dropdown-toggle" id="pagesDropdown">
+            <i class="fas fa-file-alt"></i>
+            <span class="menu-item-text">Pages</span>
+        </a>
+        <div class="submenu" id="pagesSubmenu">
+            <a href="schedule_details.html" class="menu-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="menu-item-text">Schedules</span>
+            </a>
+            <a href="testimonial.html" class="menu-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span class="menu-item-text">Payments</span>
+            </a>
+            <a href="attendance_details.html" class="menu-item">
+                <i class="fas fa-clipboard-check"></i>
+                <span class="menu-item-text">Attendance</span>
+            </a>
         </div>
+
+        <a href="admin_profile.html" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span class="menu-item-text">Profile</span>
+        </a>
+
     </div>
 </div>
 
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="d-flex align-items-center">
+            <div class="toggle-sidebar" id="toggle-sidebar">
+                <i class="fas fa-bars"></i>
+            </div>
+            <h1>Admin Dashboard</h1>
+        </div>
+
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3>Total Students</h3>
+                <div class="number" id="studentCount"></div>
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3>Total Instructors</h3>
+                <div class="number" id="instructorCount"></div>
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Total Classes</h3>
+                <div class="number" id="classesCount"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Calendar and Quick Actions -->
+    <div class="row mb-4">
+        <!-- Calendar -->
+        <div class="col-lg-8 mb-4">
+            <div class="dashboard-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="mb-0">A/L Class Schedule</h3>
+                    <a href="classes_details.html" class="btn btn-sm" style="background-color: var(--primary-color); color: white;">
+                        <i class="fas fa-plus me-1"></i> Add Class
+                    </a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Teacher</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="dashboardTable">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4 mb-4">
+            <div class="dashboard-card">
+                <h3 class="mb-4">Quick Actions</h3>
+                <div class="row">
+                    <div class="col-6">
+                        <a href="students_details.html" style="text-decoration: none;"><div class="quick-action">
+                            <i class="fas fa-user-plus"></i>
+                            <p>Add Student</p>
+                        </div></a>
+                    </div>
+                    <div class="col-6">
+                        <a href="instructors_details.html" style="text-decoration: none;"><div class="quick-action">
+                            <i class="fas fa-user-tie"></i>
+                            <p>Add Instructor</p>
+                        </div></a>
+                    </div>
+                    <div class="col-6">
+                        <a href="classes_details.html" style="text-decoration: none;"><div class="quick-action">
+                            <i class="fas fa-book-open"></i>
+                            <p>Add Class</p>
+                        </div></a>
+                    </div>
+                    <div class="col-6">
+                        <a href="schedule_details.html" style="text-decoration: none;"><div class="quick-action">
+                            <i class="fas fa-calendar-plus"></i>
+                            <p>Schedule Class</p>
+                        </div></a>
+                    </div>
+<!--                    <div class="col-6">-->
+<!--                        <div class="quick-action">-->
+<!--                            <i class="fas fa-file-invoice"></i>-->
+<!--                            <p>Create Invoice</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-6">-->
+<!--                        <div class="quick-action">-->
+<!--                            <i class="fas fa-chart-pie"></i>-->
+<!--                            <p>Generate Report</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="adminCreationModal" tabindex="-1" aria-labelledby="adminCreationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adminCreationModalLabel">Create New Admin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="adminCreationForm">
+                        <div class="mb-3">
+                            <label for="adminName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="adminName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="adminEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adminMobile" class="form-label">Mobile</label>
+                            <input type="tel" class="form-control" id="adminMobile" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveAdminBtn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="text-center p-4 mt-4" style="color: #6c757d; font-size: 14px;">
+        <p>&copy; 2025 Sarasavi Higher Education Institute. All rights reserved.</p>
+    </footer>
+</div>
+
+<!-- Scripts -->
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="js/login.js"></script>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="lib/wow/wow.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/waypoints/waypoints.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get("restricted") === "true") {
-            document.getElementById("navbar").style.display = "none"; // Hide navbar
+
+
+    // Toggle Sidebar
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+        document.getElementById('main-content').classList.toggle('expanded');
+    });
+
+    // Toggle Dropdown Menus
+    document.getElementById('classesDropdown').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('classesSubmenu').classList.toggle('expanded');
+    });
+
+    document.getElementById('pagesDropdown').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('pagesSubmenu').classList.toggle('expanded');
+    });
+
+    // Expand active submenu by default
+    document.getElementById('classesSubmenu').classList.add('expanded');
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#classTableBody tr');
+
+        rows.forEach(row => {
+            const classNameCell = row.cells[0].textContent.toLowerCase();
+            if (classNameCell.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the admin creation card
+        const adminCard = document.querySelector('.col-md-3:nth-child(4) .dashboard-card');
+
+        // Add cursor style and click event
+        adminCard.style.cursor = 'pointer';
+        adminCard.addEventListener('click', function() {
+            const adminModal = new bootstrap.Modal(document.getElementById('adminCreationModal'));
+            adminModal.show();
+        });
+
+        // Handle save button click
+        document.getElementById('saveAdminBtn').addEventListener('click', function() {
+            const name = document.getElementById('adminName').value;
+            const email = document.getElementById('adminEmail').value;
+            const mobile = document.getElementById('adminMobile').value;
+
+            if (name && email && mobile) {
+                // Here you would typically send data to your backend
+                console.log('Creating admin:', { name, email, mobile });
+
+                // Example of what you might do with the data
+                saveAdmin({ name, email, mobile })
+                    .then(response => {
+                        // Show success message
+                        alert('Admin created successfully!');
+                        // Close the modal
+                        bootstrap.Modal.getInstance(document.getElementById('adminCreationModal')).hide();
+                        // Reset the form
+                        document.getElementById('adminCreationForm').reset();
+                    })
+                    .catch(error => {
+                        alert('Error creating admin: ' + error.message);
+                    });
+            } else {
+                alert('Please fill all required fields');
+            }
+        });
+
+        // Mock function - replace with actual API call
+        function saveAdmin(adminData) {
+            return new Promise((resolve, reject) => {
+                // Simulate API call
+                setTimeout(() => {
+                    // In reality, this would be your API endpoint
+                    resolve({ success: true, data: adminData });
+                }, 500);
+            });
         }
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

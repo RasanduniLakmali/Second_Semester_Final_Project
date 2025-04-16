@@ -1,21 +1,24 @@
 package org.example.aad_final_project.controller;
 
+import jakarta.validation.*;
 import org.example.aad_final_project.dto.InstructorDTO;
-import org.example.aad_final_project.dto.SubjectDTO;
-import org.example.aad_final_project.entity.Instructor;
+import org.example.aad_final_project.dto.StudentDTO;
 import org.example.aad_final_project.service.InstructorService;
-import org.example.aad_final_project.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.example.aad_final_project.util.ResponseUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 
-import static org.example.aad_final_project.controller.StudentController.uploadDirectory;
-
+@Validated
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/v1/instructor")
@@ -25,6 +28,7 @@ public class InstructorController {
     private InstructorService instructorService;
 
     public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/uploads/";
+
 
     @PostMapping("save")
     public ResponseUtil saveInstructor(
@@ -40,6 +44,17 @@ public class InstructorController {
     ) throws Exception {
 
         System.out.println(instructorName +" "+file + " " + address + " " + phone + " " + email + " " + qualification + " " + subjectCode + " " + subjectID);
+
+        InstructorDTO dto = new InstructorDTO(instructorName, "", address, phone, email, qualification, subjectCode,subjectID, adminId);
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<InstructorDTO>> violations = validator.validate(dto);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+
 
         String uniqueFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         Path filePath = Paths.get(uploadDirectory, uniqueFileName);
@@ -76,6 +91,7 @@ public class InstructorController {
         return instructorDTO;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("update")
     public ResponseUtil updateInstructor(
             @RequestParam("instructor_name") String instructorName,
@@ -88,7 +104,18 @@ public class InstructorController {
             @RequestParam("subject_id") Integer subjectID,
             @RequestParam("admin_id") Integer adminId
     ) throws Exception {
-        System.out.println(file);
+        System.out.println(adminId);
+
+        InstructorDTO dto = new InstructorDTO(instructorName, "", address, phone, email, qualification, subjectCode,subjectID, adminId);
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<InstructorDTO>> violations = validator.validate(dto);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+
 
         String uniqueFileName = null;
 
@@ -124,6 +151,7 @@ public class InstructorController {
 
         boolean isUpdated = instructorService.updateInstructor(instructorDTO);
         System.out.println(isUpdated);
+        System.out.println(instructorDTO.toString());
 
         if (isUpdated) {
             return new ResponseUtil(201, "Instructor updated!", null);
@@ -154,4 +182,16 @@ public class InstructorController {
         return instructorService.getId(instructorName);
     }
 
+
+    @GetMapping("getEmail/{instructorName}")
+    public String getInstructorEmail(@PathVariable String instructorName){
+        return instructorService.getEmail(instructorName);
+    }
+
+
+    @GetMapping("count")
+    public ResponseEntity<Long> getInstructorCount() {
+        long count = instructorService.getInstructorCount();
+        return ResponseEntity.ok(count);
+    }
 }

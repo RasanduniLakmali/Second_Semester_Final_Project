@@ -2,14 +2,13 @@ package org.example.aad_final_project.controller;
 
 
 import org.example.aad_final_project.dto.ClassSubjectDTO;
-import org.example.aad_final_project.dto.InstructorDTO;
 import org.example.aad_final_project.dto.SubjectInstructorDTO;
 import org.example.aad_final_project.service.ClassSubjectService;
-import org.example.aad_final_project.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.example.aad_final_project.util.ResponseUtil;
 
 import java.util.List;
 
@@ -68,9 +67,10 @@ public class ClassSubjectController {
     }
 
 
-    @GetMapping("/all")
+    @GetMapping("all")
     public ResponseEntity<List<SubjectInstructorDTO>> getAllSubjects() {
         List<SubjectInstructorDTO> subjects = classSubjectService.getAllSubjects();
         return ResponseEntity.ok(subjects);
     }
+
 }

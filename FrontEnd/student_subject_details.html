@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student class details</title>
+
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1EB2BC;
+            --secondary-color: #0A7A82;
+            --dark-color: #1A2942;
+            --light-color: #f8f9fa;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--dark-color);
+            color: white;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar .brand {
+            padding: 20px 15px;
+            background-color: var(--primary-color);
+            text-align: center;
+        }
+
+        .sidebar .brand h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .sidebar .brand h5 {
+            margin: 0;
+            font-size: 14px;
+            color: white;
+        }
+
+        .sidebar .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .sidebar .menu-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .sidebar .menu-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .sidebar .menu-item i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar .menu-item-text {
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .menu-item-text {
+            opacity: 0;
+            width: 0;
+        }
+
+        .sidebar .submenu {
+            padding-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .sidebar .submenu.expanded {
+            max-height: 500px;
+        }
+
+        .sidebar .submenu .menu-item {
+            padding: 8px 15px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        .main-content.expanded {
+            margin-left: 60px;
+        }
+
+        /* Header */
+        .top-header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--dark-color);
+        }
+
+        .profile-section img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 20px;
+            height: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(30, 178, 188, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .dashboard-card h3 {
+            font-size: 18px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .dashboard-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .dashboard-card .trend {
+            font-size: 14px;
+            color: #28a745;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .table-container h3 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        /* Classes Page Specific */
+        .classes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Toggle Button */
+        .toggle-sidebar {
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .sidebar .menu-item-text {
+                opacity: 0;
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 60px;
+            }
+
+            .sidebar.expanded {
+                width: var(--sidebar-width);
+            }
+
+            .sidebar.expanded .menu-item-text {
+                opacity: 1;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar.expanded {
+                width: var(--sidebar-width);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="brand">
+        <h2><i class="fa fa-book me-2"></i>SARASAVI</h2>
+        <h5>Higher Education Institute</h5>
+    </div>
+    <div class="menu">
+        <a href="admin_dashboard.html" class="menu-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="menu-item-text">Dashboard</span>
+        </a>
+        <a href="subject_details.html" class="menu-item">
+            <i class="fas fa-book"></i>
+            <span class="menu-item-text">Subjects</span>
+        </a>
+        <a href="instructors_details.html" class="menu-item">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span class="menu-item-text">Instructors</span>
+        </a>
+        <a href="students_details.html" class="menu-item">
+            <i class="fas fa-user-graduate"></i>
+            <span class="menu-item-text">Students</span>
+        </a>
+        <a href="#" class="menu-item dropdown-toggle" id="classesDropdown">
+            <i class="fas fa-school"></i>
+            <span class="menu-item-text">Classes</span>
+        </a>
+        <div class="submenu" id="classesSubmenu">
+            <a href="classes_details.html" class="menu-item">
+                <i class="fas fa-list"></i>
+                <span class="menu-item-text">Manage Classes</span>
+            </a>
+            <a href="student_subject_details.html" class="menu-item active">
+                <i class="fas fa-user-plus"></i>
+                <span class="menu-item-text">Assign Class</span>
+            </a>
+            <a href="class_subject_details.html" class="menu-item">
+                <i class="fas fa-book-open"></i>
+                <span class="menu-item-text">Assign Subject</span>
+            </a>
+        </div>
+        <a href="#" class="menu-item dropdown-toggle" id="pagesDropdown">
+            <i class="fas fa-file-alt"></i>
+            <span class="menu-item-text">Pages</span>
+        </a>
+        <div class="submenu" id="pagesSubmenu">
+            <a href="schedule_details.html" class="menu-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="menu-item-text">Schedules</span>
+            </a>
+            <a href="testimonial.html" class="menu-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span class="menu-item-text">Payments</span>
+            </a>
+            <a href="attendance_details.html" class="menu-item">
+                <i class="fas fa-clipboard-check"></i>
+                <span class="menu-item-text">Attendance</span>
+            </a>
+        </div>
+        <a href="admin_profile.html" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span class="menu-item-text">Profile</span>
+        </a>
+    </div>
+</div>
+
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="d-flex align-items-center">
+            <div class="toggle-sidebar" id="toggle-sidebar">
+                <i class="fas fa-bars"></i>
+            </div>
+            <h1>Manage Student's Subjects</h1>
+        </div>
+
+    </div>
+
+    <div class="container-fluid px-0">
+        <!-- Actions Row -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search Student by Name">
+            </div>
+            <div class="col-md-6 text-end">
+                <span><button type="button" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#addStSubjectModal">
+                    <i class="bi bi-plus-circle me-1"></i> Add Details
+                </button>
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="studentSubjectTable">
+                    <thead>
+                    <tr>
+
+                        <th>Student Name</th>
+                        <th>Subject Name</th>
+                        <th>Instructor Name</th>
+                        <th>Actions</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="studentSubjectTableBody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="text-center p-4 mt-4" style="color: #6c757d; font-size: 14px;">
+            <p>&copy; 2025 Sarasavi Higher Education Institute. All rights reserved.</p>
+        </footer>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="addStSubjectModal" tabindex="-1" aria-labelledby="addStSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStSubjectModalLabel">Add Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form id="addStSubjectForm">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="studentName" class="form-label">Student Name</label>
+                            <select class="form-select" id="studentName">
+                                <option value="">Select Student</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="className" class="form-label">Class Name</label>
+                            <select class="form-select" id="className">
+                                <option value="">Select Student</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+                          <label for="sub1" class="form-label">Subject 01</label>
+                          <select class="form-select subjectSelect" id="sub1">
+                            <option value="">Select Subject 1</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName1" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName1">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                           <label for="sub2" class="form-label">Subject 02</label>
+                             <select class="form-select subjectSelect" id="sub2">
+                                <option value="">Select Subject 2</option>
+                             </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName2" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName2">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sub3" class="form-label">Subject 03</label>
+                            <select class="form-select subjectSelect" id="sub3">
+                                <option value="">Select Subject 3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="instName3" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName3">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sub4" class="form-label">Subject 04</label>
+                            <select class="form-select subjectSelect" id="sub4">
+                                <option value="">Select Subject 4</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName4" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName4">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sub5" class="form-label">Subject 05</label>
+                            <select class="form-select subjectSelect" id="sub5">
+                                <option value="">Select Subject 5</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName5" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName5">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="saveBtn">Save Class</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Edit Modal-->
+<div class="modal fade" id="editStSubjectModal" tabindex="-1" aria-labelledby="editStSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editStSubjectModalLabel">Edit Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form id="editStSubjectForm">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="studentName2" class="form-label">Student Name</label>
+                            <select class="form-select" id="studentName2">
+                                <option value="">Select Student</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="className2" class="form-label">Class Name</label>
+                            <select class="form-select" id="className2">
+                                <option value="">Select Student</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+                            <label for="sub6" class="form-label">Subject 01</label>
+                            <select class="form-select subjectSelect" id="sub6">
+                                <option value="">Select Subject 1</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName6" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName6">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sub7" class="form-label">Subject 02</label>
+                            <select class="form-select subjectSelect" id="sub7">
+                                <option value="">Select Subject 2</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName7" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName7">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sub8" class="form-label">Subject 03</label>
+                            <select class="form-select subjectSelect" id="sub8">
+                                <option value="">Select Subject 3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="instName8" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName8">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sub9" class="form-label">Subject 04</label>
+                            <select class="form-select subjectSelect" id="sub9">
+                                <option value="">Select Subject 4</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName9" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName9">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="sub10" class="form-label">Subject 05</label>
+                            <select class="form-select subjectSelect" id="sub10">
+                                <option value="">Select Subject 5</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="instName10" class="form-label">Instructor Name</label>
+                            <select class="form-select instructorSelect" id="instName10">
+                                <option value="">Select Instructor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateBtn">Save Class</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/student_class.js"></script>
+
+
+<script>
+
+
+    // Toggle Sidebar
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+        document.getElementById('main-content').classList.toggle('expanded');
+    });
+
+    // Toggle Dropdown Menus
+    document.getElementById('classesDropdown').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('classesSubmenu').classList.toggle('expanded');
+    });
+
+    document.getElementById('pagesDropdown').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('pagesSubmenu').classList.toggle('expanded');
+    });
+
+    // Expand active submenu by default
+    document.getElementById('classesSubmenu').classList.add('expanded');
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#classTableBody tr');
+
+        rows.forEach(row => {
+            const classNameCell = row.cells[0].textContent.toLowerCase();
+            if (classNameCell.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

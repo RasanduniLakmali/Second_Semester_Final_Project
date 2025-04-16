@@ -44,6 +44,7 @@ $("#saveBtn").click(function () {
     const hallNumber = $("#hallNumber").val();
     const adminName = $("#adminName").val();
     const adminId = $("#adminId").val();
+    const fees = $("#classFee").val();
 
     $.ajax({
         url: "http://localhost:8080/api/v1/class/save",
@@ -57,7 +58,8 @@ $("#saveBtn").click(function () {
             capacity: capacity,
             hall_number: hallNumber,
             admin_id: adminId,
-            admin_name: adminName
+            admin_name: adminName,
+            class_fee: fees
         }),
 
         success: function (data) {
@@ -66,8 +68,37 @@ $("#saveBtn").click(function () {
             fetchClassData();
             clearFields();
         },
-        error: function () {
-            alert("Class not saved.");
+        error: function (xhr) {
+            console.log("Error Response:", xhr);
+
+            if (xhr.status === 400 && Array.isArray(xhr.responseJSON)) {
+                let messages = xhr.responseJSON;
+
+                let messageHtml = "<ul>";
+                messages.forEach(msg => {
+                    messageHtml += `<li>${msg}</li>`;
+                });
+                messageHtml += "</ul>";
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Validation Errors",
+                    html: messageHtml
+                });
+
+            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseJSON.message
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred."
+                });
+            }
         }
     })
 })
@@ -79,10 +110,12 @@ $('#adminName').change(function () {
     if (!adminName) return;
 
     $.ajax({
-        url: `http://localhost:8080/api/v1/admin/getAdmin/${adminName}`,
+        url: `http://localhost:8080/api/v1/admin/getAdmin/ADMIN/${adminName}`,
         method: "GET",
 
         success: function (data) {
+            console.log(data);
+
             $("#adminId").val(data);
         },
 
@@ -104,7 +137,7 @@ $('#adminName2').change(function () {
     if (!adminName2) return;
 
     $.ajax({
-        url: `http://localhost:8080/api/v1/admin/getAdmin/${adminName2}`,
+        url: `http://localhost:8080/api/v1/admin/getAdmin/ADMIN/${adminName2}`,
         method: "GET",
 
         success: function (data) {
@@ -138,7 +171,8 @@ function fetchClassData() {
                         <td>${classEntity.class_name}</td>
                         <td>${classEntity.capacity}</td>
                         <td>${classEntity.hall_number}</td>
-                       <td>${classEntity.admin_name}</td>
+                        <td>${classEntity.admin_name}</td>
+                        <td>${classEntity.class_fee}</td>
                         <td>
                             <button class="btn btn-warning btn-sm edit-btn" id="editBtn" data-bs-target="#editClassModal">
                                 <i class="fas fa-edit"></i>
@@ -161,15 +195,17 @@ function fetchClassData() {
                 let capacity = row.find('td').eq(1).text();
                 let hallNumber = row.find('td').eq(2).text();
                 let adminName = row.find('td').eq(3).text();
+                let classFees = row.find('td').eq(4).text();
 
                 $("#className3").text(className);
                 $("#capacity3").text(capacity);
                 $("#hallNumber3").text(hallNumber);
                 $("#adminName3").text(adminName);
+                $("#classFee3").text(classFees);
 
 
                 $.ajax({
-                    url: `http://localhost:8080/api/v1/admin/getAdmin/${adminName}`,
+                    url: `http://localhost:8080/api/v1/admin/getAdmin/ADMIN/${adminName}`,
                     method: "GET",
 
                     success: function (data) {
@@ -200,17 +236,19 @@ $(document).on("click", "#editBtn", function () {
     let capacity = row.find('td').eq(1).text();
     let hallNumber = row.find('td').eq(2).text();
     let adminName = row.find('td').eq(3).text();
-
+    let classFees = row.find('td').eq(4).text();
 
     // Set the values in the modal
     $("#className2").val(className);
     $("#capacity2").val(capacity);
     $("#hallNumber2").val(hallNumber);
     $("#adminName2").val(adminName).change();
+    $("#classFee2").val(classFees);
 
 
     // Show the modal
     $("#editClassModal").modal("show");
+
 });
 
 
@@ -224,6 +262,7 @@ $("#updateBtn").click(function () {
     const hallNumber = $("#hallNumber2").val();
     const adminName = $("#adminName2").val();
     const adminId = $("#adminId2").val();
+    const classFees = $("#classFee2").val();
 
     $.ajax({
         url: "http://localhost:8080/api/v1/class/update",
@@ -237,7 +276,8 @@ $("#updateBtn").click(function () {
             capacity: capacity,
             hall_number: hallNumber,
             admin_id: adminId,
-            admin_name: adminName
+            admin_name: adminName,
+            class_fee: classFees
         }),
 
         success: function (data) {
@@ -246,8 +286,37 @@ $("#updateBtn").click(function () {
             fetchClassData();
             clearFields();
         },
-        error: function () {
-            alert("Class not updated.");
+        error: function (xhr) {
+            console.log("Error Response:", xhr);
+
+            if (xhr.status === 400 && Array.isArray(xhr.responseJSON)) {
+                let messages = xhr.responseJSON;
+
+                let messageHtml = "<ul>";
+                messages.forEach(msg => {
+                    messageHtml += `<li>${msg}</li>`;
+                });
+                messageHtml += "</ul>";
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Validation Errors",
+                    html: messageHtml
+                });
+
+            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseJSON.message
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred."
+                });
+            }
         }
     })
 })
@@ -269,13 +338,38 @@ $(document).on("click", "#deleteBtn", function () {
                 fetchClassData();
                 clearFields();
             },
-            error: (err) =>{
-                alert("Class not deleted!")
+            error: (xhr) =>{
+
+                console.log("Error Response:", xhr);
+
+                let errorMessage = "Class not deleted!";
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                alert(errorMessage);
             }
         })
     }
 
 })
+
+
+$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+        const inputValue = $(this).val().trim().toLowerCase();
+
+        $("#classTableBody tr").each(function () {
+            const className = $(this).find("td").eq(0).text().trim().toLowerCase();
+
+            if (className.includes(inputValue)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
 
 
 function clearFields(){
@@ -294,4 +388,8 @@ function clearFields(){
     $("#hallNumber3").val("");
     $("#adminName3").val("");
     $("#adminId3").val("");
+    $("#classFee").val("");
+    $("#classFee2").val("");
+    $("#classFee3").val("");
+
 }

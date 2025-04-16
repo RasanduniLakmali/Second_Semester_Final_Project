@@ -1,13 +1,15 @@
 package org.example.aad_final_project.service;
 
+import org.example.aad_final_project.dto.NewStudentDTO;
 import org.example.aad_final_project.dto.StudentDTO;
+import org.example.aad_final_project.dto.StudentMyClassDTO;
 import org.example.aad_final_project.entity.Student;
 
 import java.util.List;
 
 public interface StudentService {
 
-    public boolean save(StudentDTO studentDTO);
+    public StudentDTO save(StudentDTO studentDTO);
 
     public List<StudentDTO> getAllStudents();
 
@@ -24,4 +26,16 @@ public interface StudentService {
 
 
     public List<StudentDTO> getStudents(String instructorName, int classId);
+
+    Integer getStudentIdByEmail(String email);
+
+    StudentMyClassDTO getStudentDetails(Integer studentId);
+
+    String getName(Integer studentId);
+
+    boolean saveNewStudent(NewStudentDTO newStudentDTO);
+
+    StudentDTO getStudentProfile(String email);
+
+    public long getStudentCount();
 }

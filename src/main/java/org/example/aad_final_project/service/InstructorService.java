@@ -19,4 +19,8 @@ public interface InstructorService {
     List<String> getNames();
 
     String getId(String instructorName);
+
+    String getEmail(String instructorName);
+
+    long getInstructorCount();
 }

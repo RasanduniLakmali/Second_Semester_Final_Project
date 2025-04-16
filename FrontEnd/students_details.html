@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Student Details</title>
 
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Bootstrap Icons -->
@@ -26,211 +25,385 @@
     <link href="css/style.css" rel="stylesheet">
 
     <style>
-        .table img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-        #heading {
-            position: absolute;
-            left: 200px;
-            top: 100px;
-        }
         :root {
-            --primary-color: #00BCD4;
-            --primary-dark: #00ACC1;
-            --secondary-color: #f8f9fa;
-            --text-color: #333;
-            --light-background: #ffffff;
+            --primary-color: #1EB2BC;
+            --secondary-color: #0A7A82;
+            --dark-color: #1A2942;
+            --light-color: #f8f9fa;
+            --sidebar-width: 250px;
         }
 
-        /* Modal Styling */
-        .modal-header {
-            background-color: var(--primary-color);
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--dark-color);
             color: white;
-            border-bottom: none;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
         }
 
-        .modal-header .modal-title {
-            font-weight: 600;
+        .sidebar.collapsed {
+            width: 60px;
         }
 
-        .modal-header .btn-close {
-            background-color: rgba(255,255,255,0.2);
-            opacity: 1;
-            border-radius: 50%;
-            padding: 8px;
-        }
-
-        .modal-content {
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .modal-body .form-label {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .modal-body .form-control,
-        .modal-body .form-select {
-            border-color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .modal-body .form-control:focus,
-        .modal-body .form-select:focus {
-            border-color: var(--primary-dark);
-            box-shadow: 0 0 0 0.25rem rgba(0, 188, 212, 0.25);
-        }
-
-        .modal-footer .btn-primary {
+        .sidebar .brand {
+            padding: 20px 15px;
             background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transition: all 0.3s ease;
+            text-align: center;
         }
 
-        .modal-footer .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
+        .sidebar .brand h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
         }
 
-        /* Search Input Styling */
-        #searchInput {
-            border-color: var(--primary-color);
-            border-radius: 8px;
-            padding: 10px 15px;
-            transition: all 0.3s ease;
+        .sidebar .brand h5 {
+            margin: 0;
+            font-size: 14px;
+            color: white;
         }
 
-        #searchInput:focus {
-            border-color: var(--primary-dark);
-            box-shadow: 0 0 0 0.25rem rgba(0, 188, 212, 0.25);
-        }
-
-        /* Add Student Button */
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+        .sidebar .menu-item {
+            padding: 12px 20px;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            transition: all 0.3s;
         }
 
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
+        .sidebar .menu-item:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
         }
 
-        /* Table Styling */
-        #studentTable {
-            border-radius: 10px;
+        .sidebar .menu-item.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .sidebar .menu-item i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar .menu-item-text {
+            transition: opacity 0.3s;
+            white-space: nowrap;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        #studentTable thead {
-            background-color: var(--primary-color);
-            color: white;
+        .sidebar.collapsed .menu-item-text {
+            opacity: 0;
+            width: 0;
         }
 
-        #studentTable thead th {
-            border: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .sidebar .submenu {
+            padding-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
         }
 
-        #studentTable.table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 188, 212, 0.05);
+        .sidebar .submenu.expanded {
+            max-height: 500px;
         }
 
-        #studentTable.table-hover tbody tr:hover {
-            background-color: rgba(0, 188, 212, 0.1);
-            transition: background-color 0.3s ease;
+        .sidebar .submenu .menu-item {
+            padding: 8px 15px;
         }
 
-        /* Action Buttons in Table */
-        .table-actions .btn {
-            margin-right: 5px;
-            padding: 5px 10px;
-            font-size: 0.875rem;
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            transition: margin-left 0.3s;
         }
 
-        .table-actions .btn-edit {
-            background-color: var(--primary-color);
-            color: white;
+        .main-content.expanded {
+            margin-left: 60px;
         }
 
-        .table-actions .btn-delete {
-            background-color: #dc3545;
-            color: white;
+        /* Header */
+        .top-header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--dark-color);
+        }
+
+        .profile-section img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 20px;
+            height: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(30, 178, 188, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+
+        .dashboard-card h3 {
+            font-size: 18px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .dashboard-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .dashboard-card .trend {
+            font-size: 14px;
+            color: #28a745;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .table-container h3 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+        /* Classes Page Specific */
+        .classes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Toggle Button */
+        .toggle-sidebar {
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .sidebar .menu-item-text {
+                opacity: 0;
+                width: 0;
+            }
+
+            .main-content {
+                margin-left: 60px;
+            }
+
+            .sidebar.expanded {
+                width: var(--sidebar-width);
+            }
+
+            .sidebar.expanded .menu-item-text {
+                opacity: 1;
+                width: auto;
+            }
         }
 
         @media (max-width: 768px) {
-            .modal-dialog {
-                max-width: 95%;
-                margin: 1.75rem auto;
+            .sidebar {
+                width: 0;
             }
 
-            .table-responsive {
-                font-size: 0.9rem;
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar.expanded {
+                width: var(--sidebar-width);
             }
         }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="index.html" class="navbar-brand d-flex flex-column align-items-start px-4 px-lg-5">
-        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>SARASAVI</h2>
-        <h5 class="m-0 text-primary">Higher Education Institute</h5>
-    </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="admin_dashboard.html" class="nav-item nav-link">Home</a>
-            <a href="subject_details.html" class="nav-item nav-link">Subjects</a>
-            <a href="instructors_details.html" class="nav-item nav-link">Instructors</a>
-            <a href="students_details.html" class="nav-item nav-link active">Students</a>
-            <div class="nav-item dropdown">
-                <a href="classes_details.html" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown">Classes</a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="student_class_details.html" class="dropdown-item">Assign Class</a>
-                    <a href="class_subject_details.html" class="dropdown-item">Assign Subject</a>
-                </div>
-            </div>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="schedule_details.html" class="dropdown-item">Schedules</a>
-                    <a href="testimonial.html" class="dropdown-item">Payments</a>
-                    <a href="attendance_details.html" class="dropdown-item">Attendance</a>
-
-                </div>
-            </div>
-            <a href="contact.html" class="nav-item nav-link">Contact</a>
-            <a href="admin_profile.html" class="nav-item nav-link">Profile</a>
-        </div>
-
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="brand">
+        <h2><i class="fa fa-book me-2"></i>SARASAVI</h2>
+        <h5>Higher Education Institute</h5>
     </div>
-</nav>
-
-<!-- Heading -->
-<h3 id="heading">Manage Students</h3>
-
-<!-- Add Student Button -->
-<div class="d-flex justify-content-end mt-3 me-3">
-    <button type="button" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#addStudentModal">
-        <i class="bi bi-plus-circle me-1"></i> Add Student
-    </button>
+    <div class="menu">
+        <a href="admin_dashboard.html" class="menu-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="menu-item-text">Dashboard</span>
+        </a>
+        <a href="subject_details.html" class="menu-item">
+            <i class="fas fa-book"></i>
+            <span class="menu-item-text">Subjects</span>
+        </a>
+        <a href="instructors_details.html" class="menu-item">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span class="menu-item-text">Instructors</span>
+        </a>
+        <a href="students_details.html" class="menu-item active">
+            <i class="fas fa-user-graduate"></i>
+            <span class="menu-item-text">Students</span>
+        </a>
+        <a href="#" class="menu-item dropdown-toggle" id="classesDropdown">
+            <i class="fas fa-school"></i>
+            <span class="menu-item-text">Classes</span>
+        </a>
+        <div class="submenu" id="classesSubmenu">
+            <a href="classes_details.html" class="menu-item">
+                <i class="fas fa-list"></i>
+                <span class="menu-item-text">Manage Classes</span>
+            </a>
+            <a href="student_subject_details.html" class="menu-item">
+                <i class="fas fa-user-plus"></i>
+                <span class="menu-item-text">Assign Class</span>
+            </a>
+            <a href="class_subject_details.html" class="menu-item">
+                <i class="fas fa-book-open"></i>
+                <span class="menu-item-text">Assign Subject</span>
+            </a>
+        </div>
+        <a href="#" class="menu-item dropdown-toggle" id="pagesDropdown">
+            <i class="fas fa-file-alt"></i>
+            <span class="menu-item-text">Pages</span>
+        </a>
+        <div class="submenu" id="pagesSubmenu">
+            <a href="schedule_details.html" class="menu-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="menu-item-text">Schedules</span>
+            </a>
+            <a href="testimonial.html" class="menu-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span class="menu-item-text">Payments</span>
+            </a>
+            <a href="attendance_details.html" class="menu-item">
+                <i class="fas fa-clipboard-check"></i>
+                <span class="menu-item-text">Attendance</span>
+            </a>
+        </div>
+        <a href="admin_profile.html" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span class="menu-item-text">Profile</span>
+        </a>
+    </div>
 </div>
 
 
-<!-- Add Student Modal -->
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="d-flex align-items-center">
+            <div class="toggle-sidebar" id="toggle-sidebar">
+                <i class="fas fa-bars"></i>
+            </div>
+            <h1>Manage Students</h1>
+        </div>
+
+    </div>
+
+    <div class="container-fluid px-0">
+        <!-- Actions Row -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search Instructor by Name">
+            </div>
+            <div class="col-md-6 text-end">
+                <span><button type="button" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                    <i class="bi bi-plus-circle me-1"></i> Add Student
+                </button>
+               </span>
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="studentTable">
+                    <thead>
+                    <tr>
+
+                        <th>Student Name</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Photo</th>
+                        <th>Actions</th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                    <!-- Records will be inserted dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="text-center p-4 mt-4" style="color: #6c757d; font-size: 14px;">
+            <p>&copy; 2025 Sarasavi Higher Education Institute. All rights reserved.</p>
+        </footer>
+    </div>
+</div>
+
+        <!-- Add Student Modal -->
 <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -344,36 +517,6 @@
     </div>
 </div>
 
-<!-- Student Table -->
-<section>
-    <div class="container mt-4">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search Student by Name">
-            </div>
-        </div>
-        <br>
-        <div class="table-responsive">
-            <table class="table table-striped table-hover" id="studentTable">
-                <thead>
-                <tr>
-
-                    <th>Student Name</th>
-                    <th>Address</th>
-                    <th>Contact</th>
-                    <th>Photo</th>
-                    <th>Actions</th>
-
-                </tr>
-                </thead>
-                <tbody id="studentTableBody">
-                <!-- Records will be inserted dynamically here -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
 
 <!-- Student Details Modal -->
 <div class="modal fade" id="studentDetailsModal" tabindex="-1" aria-labelledby="studentDetailsModalLabel" aria-hidden="true">
@@ -399,6 +542,47 @@
 
 <script src="js/jquery-3.7.1.min.js"></script>
 <script src="js/student_details.js"></script>
+
+<script>
+
+
+    // Toggle Sidebar
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+        document.getElementById('main-content').classList.toggle('expanded');
+    });
+
+    // Toggle Dropdown Menus
+    document.getElementById('classesDropdown').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('classesSubmenu').classList.toggle('expanded');
+    });
+
+    document.getElementById('pagesDropdown').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('pagesSubmenu').classList.toggle('expanded');
+    });
+
+    // Expand active submenu by default
+    document.getElementById('classesSubmenu').classList.add('expanded');
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#classTableBody tr');
+
+        rows.forEach(row => {
+            const classNameCell = row.cells[0].textContent.toLowerCase();
+            if (classNameCell.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -120,6 +120,7 @@ $("#saveBtn").click(function () {
       const formattedDate = scheduleDate.split("/").reverse().join("-");
       const startTime = $("#startTime").val() + ":00";
       const endTime = $("#endTime").val() + ":00";
+      const scheduleDay = $("#scheduleDay").val();
       let classId = null;
       let subjectId = null;
       let instructorId =  null;
@@ -163,7 +164,8 @@ $("#saveBtn").click(function () {
                                       class_id: classId,
                                       class_name: className,
                                       instructor_name: instructorName,
-                                      subject_name: subjectName
+                                      subject_name: subjectName,
+                                      schedule_day: scheduleDay,
                                   }),
 
                                   success: function (data) {
@@ -264,6 +266,7 @@ const fetchScheduleData = () => {
                         <td>${schedule.schedule_date}</td>
                         <td>${schedule.start_time}</td>
                         <td>${schedule.end_time}</td>
+                        <td>${schedule.schedule_day}</td>
                        
                         <td>
                             <button class="btn btn-warning btn-sm edit-btn" id="editBtn" data-bs-target="#editScheduleModal">
@@ -283,6 +286,7 @@ const fetchScheduleData = () => {
     })
 }
 
+
 $(document).on("click", "#editBtn", function () {
 
 
@@ -295,6 +299,7 @@ $(document).on("click", "#editBtn", function () {
     let scheduleDate = row.find('td').eq(3).text();
     let startTime = row.find('td').eq(4).text();
     let endTime = row.find('td').eq(5).text();
+    let scheduleDay = row.find('td').eq(6).text();
 
 
     $("#className2").val(className).change();
@@ -303,6 +308,7 @@ $(document).on("click", "#editBtn", function () {
     $("#scheduleDate2").val(scheduleDate);
     $("#startTime2").val(startTime);
     $("#endTime2").val(endTime);
+    $("#scheduleDay2").val(scheduleDay);
 
     // Show the modal
     $("#editScheduleModal").modal("show");
@@ -318,6 +324,7 @@ $("#updateBtn").click(function () {
     const formattedDate = scheduleDate.split("/").reverse().join("-");
     const startTime = $("#startTime2").val().length === 5 ? $("#startTime2").val() + ":00" : $("#startTime2").val();
     const endTime = $("#endTime2").val().length === 5 ? $("#endTime2").val() + ":00" : $("#endTime2").val();
+    const scheduleDay = $("#scheduleDay2").val();
     let classId = null;
     let subjectId = null;
     let instructorId =  null;
@@ -361,7 +368,8 @@ $("#updateBtn").click(function () {
                                     class_id: classId,
                                     class_name: className,
                                     instructor_name: instructorName,
-                                    subject_name: subjectName
+                                    subject_name: subjectName,
+                                    schedule_day: scheduleDay
                                 }),
 
                                 success: function (data) {
@@ -505,6 +513,25 @@ $(document).on("click", "#deleteBtn", function () {
 });
 
 
+$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+        const inputValue = $(this).val().trim().toLowerCase();
+
+        $("#scheduleTableBody tr").each(function () {
+            const className = $(this).find("td").eq(0).text().trim().toLowerCase();
+
+            if (className.includes(inputValue)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+});
+
+
+
 function clearFields(){
     $("#className").val("");
     $("#subName").val("");
@@ -518,4 +545,6 @@ function clearFields(){
     $("#scheduleDate2").val("");
     $("#startTime2").val("");
     $("#endTime2").val("");
+    $("#scheduleDay2").val("");
+    $("#scheduleDay").val();
 }

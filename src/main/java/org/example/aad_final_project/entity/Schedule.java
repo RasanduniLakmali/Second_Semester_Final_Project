@@ -38,6 +38,8 @@ public class Schedule {
 
     private String subject_name;
 
+    private String schedule_day;
+
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<SubjectSchedule> subjectSchedules;
 

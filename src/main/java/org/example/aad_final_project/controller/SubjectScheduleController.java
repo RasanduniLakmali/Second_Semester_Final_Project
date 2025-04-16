@@ -1,14 +1,11 @@
 package org.example.aad_final_project.controller;
 
 
-import org.example.aad_final_project.dto.ScheduleDTO;
+import org.example.aad_final_project.util.ResponseUtil;
 import org.example.aad_final_project.dto.SubjectScheduleDTO;
 import org.example.aad_final_project.service.SubjectScheduleService;
-import org.example.aad_final_project.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @CrossOrigin(origins = "*")
 @RestController

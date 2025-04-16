@@ -19,4 +19,8 @@ public interface ScheduleService {
 
 
     boolean deleteSchedule(LocalDate date, String className, String instructorName);
+
+    public ScheduleDTO getNearestScheduleForGrade(String grade);
+
+
 }

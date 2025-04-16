@@ -2,7 +2,7 @@ $(document).ready(function () {
     loadClasses();
     loadSubjects();
     fetchClassSubjectData();
-    getSubjects();
+
 })
 
 function loadClasses(){
@@ -86,12 +86,14 @@ $("#saveBtn").on("click", function () {
                 url: `http://localhost:8080/api/v1/subject/getSubId/${subjectName}`,
                 method: "GET",
 
+
                 success: function (data) {
                     subjectId = data;
 
                     $.ajax({
                         url: `http://localhost:8080/api/v1/sbClass/save`,
                         method: "POST",
+
 
                         contentType: "application/json",
                         dataType: "json",
@@ -130,6 +132,7 @@ const fetchClassSubjectData = () => {
     $.ajax({
         url: "http://localhost:8080/api/v1/sbClass/getAll",
         method: "GET",
+
 
         success: (res) => {
             $("#classSubjectTableBody").empty();
@@ -195,6 +198,11 @@ $("#updateBtn").click(function () {
     $.ajax({
         url: `http://localhost:8080/api/v1/class/getClId/${className}`,
         method: 'GET',
+
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        },
+
         success: function (res) {
             classId = res;
 
@@ -254,6 +262,10 @@ $(document).on("click", "#deleteBtn", function () {
             url: `http://localhost:8080/api/v1/sbClass/delete/${className}/${subjectName}`,
             method: "DELETE",
 
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            },
+
             success: (res) =>{
                 alert("Class Subject deleted successfully!");
                 clearFields();
@@ -269,6 +281,24 @@ $(document).on("click", "#deleteBtn", function () {
 })
 
 
+$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+        const inputValue = $(this).val().trim().toLowerCase();
+
+        $("#classSubjectTableBody tr").each(function () {
+            const subjectName = $(this).find("td").eq(0).text().trim().toLowerCase();
+
+            if (subjectName.includes(inputValue)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+});
+
+
 function clearFields(){
     $("#className").val("");
     $("#subName").val("");
@@ -278,51 +308,3 @@ function clearFields(){
     $("#time2").val("");
 }
 
-
-
-function getSubjects(){
-
-    $.ajax({
-        url: "http://localhost:8080/api/v1/sbClass/all",
-        method: 'GET',
-        success: function (data) {
-            $("#subjectCardsContainer").empty();
-
-            data.forEach(function (item) {
-                const cardHtml = `
-                <div class="col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="course-item bg-light">
-                <div class="position-relative overflow-hidden">
-                    <img class="img-fluid" src="img/course-1.jpg" alt="">
-                    <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end">Read More</a>
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3">Join Now</a>
-                    </div>
-                </div>
-                <div class="text-center p-4 pb-0">
-                    <h4 class="mb-0">${item.subjectName}</h4>
-                    <h5 class="mb-4">${item.gradeRange}</h5>
-                </div>
-                <div class="d-flex border-top">
-                    <small class="flex-fill text-center border-end py-2">
-                        <i class="fa fa-user-tie text-primary me-2"></i>${item.instructorName}
-                    </small>
-                    <small class="flex-fill text-center border-end py-2">
-                        <i class="fa fa-clock text-primary me-2"></i>${item.timeDuration}
-                    </small>
-                </div>
-            </div>
-        </div>
-
-            `;
-
-                $("#subjectCardsContainer").append(cardHtml);
-            });
-        },
-        error: function (error) {
-            console.log("Error fetching subjects", error);
-        }
-    });
-
-
-}

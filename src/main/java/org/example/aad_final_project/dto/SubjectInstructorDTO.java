@@ -14,5 +14,5 @@ public class SubjectInstructorDTO {
     private String gradeRange;
     private String instructorName;
     private String timeDuration;
-    private String className;
+
 }

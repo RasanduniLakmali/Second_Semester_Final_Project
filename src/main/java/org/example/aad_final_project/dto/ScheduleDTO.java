@@ -3,11 +3,8 @@ package org.example.aad_final_project.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.Timer;
 
 
 @NoArgsConstructor
@@ -30,4 +27,6 @@ public class ScheduleDTO {
     private String class_name;
     private String instructor_name;
     private String subject_name;
+    private String schedule_day;
+
 }

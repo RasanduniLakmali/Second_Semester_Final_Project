@@ -1,11 +1,15 @@
 package org.example.aad_final_project.controller;
 
 
+import org.example.aad_final_project.dto.ResponseDTO;
 import org.example.aad_final_project.dto.StudentSubjectDTO;
 import org.example.aad_final_project.service.StudentSubjectService;
-import org.example.aad_final_project.util.ResponseUtil;
+import org.example.aad_final_project.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.aad_final_project.util.ResponseUtil;
 
 import java.util.List;
 
@@ -34,14 +38,25 @@ public class StudentSubjectController {
     }
 
     @PutMapping("update")
-    public ResponseUtil updateStudentSubject(@RequestBody StudentSubjectDTO studentSubjectDTO) {
-        System.out.println(studentSubjectDTO.toString());
-        boolean isUpdated = studentSubjectService.update(studentSubjectDTO);
-        System.out.println(isUpdated);
-        if (isUpdated) {
-            return new ResponseUtil(201, "Student subject detail updated!", null);
+    public ResponseEntity<ResponseDTO> updateStudentSubject(@RequestBody StudentSubjectDTO studentSubjectDTO) {
+        System.out.println("before updated : " + studentSubjectDTO.toString());
+
+        StudentSubjectDTO studentSubjectDTO1 = studentSubjectService.update(studentSubjectDTO);
+
+        System.out.println("after updated : " + studentSubjectDTO1);
+
+        if (studentSubjectDTO1 != null) {
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Student subject detail updated!", studentSubjectDTO1));
         } else {
-            return new ResponseUtil(200, "Student subject detail not updated!", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(VarList.Not_Found, "Student subject detail  not updated!", null));
         }
     }
+
+    @GetMapping("getAll")
+    public List<StudentSubjectDTO> getAllStudentSubjects() {
+        System.out.println(studentSubjectService.getAll());
+        return studentSubjectService.getAll();
+    }
+
 }

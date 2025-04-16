@@ -26,4 +26,7 @@ public interface InstructorRepo extends JpaRepository<Instructor,Integer> {
 
         @Query("SELECT i.instructor_id from Instructor i where i.instructor_name=:instructor_name")
         String findByInstructor_name(@Param("instructor_name") String instructor_name);
+
+        @Query("SELECT i.email from Instructor i where i.instructor_name=:instructorName")
+        String findEmailByName(@Param("instructorName") String instructorName);
 }

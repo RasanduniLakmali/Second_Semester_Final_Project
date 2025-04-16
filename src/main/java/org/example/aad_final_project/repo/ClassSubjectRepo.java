@@ -32,11 +32,10 @@ public interface ClassSubjectRepo extends JpaRepository<ClassSubject,Integer> {
 
 
     @Query("SELECT DISTINCT new org.example.aad_final_project.dto.SubjectInstructorDTO(" +
-            "s.subject_name, s.grade_range, i.instructor_name, cs.time_duration, cs.class_name) " +
-            "from Subject s JOIN ClassSubject cs " +
-            "ON s.subject_id = cs.subject.subject_id JOIN Instructor i " +
-            "ON i.subject.subject_id = cs.subject.subject_id")
+            "s.subject_name, s.grade_range, i.instructor_name, s.time_duration) " +
+            "FROM Subject s JOIN s.instructors i")
     List<SubjectInstructorDTO> getAllSubjects();
+
 
 
 

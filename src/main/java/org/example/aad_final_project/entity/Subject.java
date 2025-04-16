@@ -1,10 +1,7 @@
 package org.example.aad_final_project.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+
 public class Subject {
 
     @Id
@@ -20,6 +18,7 @@ public class Subject {
     private int subject_id;
     private String subject_name;
     private String subject_code;
+    private double fees;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<ClassSubject> classSubjects;
@@ -36,9 +35,15 @@ public class Subject {
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<PaperMark> paperMarks;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
-    private Admin admin;
+    private User admin;
+
+    @OneToMany(mappedBy ="subject", cascade = CascadeType.ALL )
+    private List<Attendance> attendances;
 
     private String grade_range;
+
+    private String time_duration;
+
 }

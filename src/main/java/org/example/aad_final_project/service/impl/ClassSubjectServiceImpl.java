@@ -92,6 +92,8 @@ public class ClassSubjectServiceImpl implements ClassSubjectService {
 
     @Override
     public List<SubjectInstructorDTO> getAllSubjects() {
-        return classSubjectRepo.getAllSubjects();
+        List<SubjectInstructorDTO> list = classSubjectRepo.getAllSubjects();
+        System.out.println(list);
+        return list;
     }
 }

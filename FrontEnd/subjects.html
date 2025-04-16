@@ -30,6 +30,37 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    <style>
+        .modal-header {
+            background-color: #0dcaf0;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #0dcaf0;
+            border-color: #0dcaf0;
+        }
+
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+            background-color: #09b6d4;
+            border-color: #09b6d4;
+        }
+
+        .form-control:focus {
+            border-color: #0dcaf0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+        }
+
+        /* Animation for the modal */
+        .modal.fade .modal-dialog {
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal.show .modal-dialog {
+            transform: none;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -57,19 +88,24 @@
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="subjects.html" class="nav-item nav-link active">Subjects</a>
                 <a href="instructors.html" class="nav-item nav-link">Instructors</a>
-                <a href="students.html" class="nav-item nav-link">Students</a>
-                <a href="classes.html" class="nav-item nav-link">Classes</a>
-                <div class="nav-item dropdown">
+                <a href="students.html" class="nav-item nav-link" id="studentNavItem">Students</a>
+                <a href="classes.html" class="nav-item nav-link" id="classNavItem">Classes</a>
+                <a href="attendance.html" class="nav-item nav-link" id="attendanceNavItem">Attendance</a>
+                <div class="nav-item dropdown" id="pageDown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu fade-down m-0">
-                        <a href="instructors.html" class="dropdown-item">Schedules</a>
-                        <a href="testimonial.html" class="dropdown-item">Payments</a>
+                    <div class="dropdown-menu fade-down m-0" >
+                        <a href="instructor_schedule.html" class="dropdown-item">Schedules</a>
+                        <a href="payment.html" class="dropdown-item">Payments</a>
                         <a href="testimonial.html" class="dropdown-item">Attendance</a>
                         <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="payment.html" class="nav-item nav-link" id="paymentNavItem">Payment</a>
+                <a href="student_profile.html" class="nav-item nav-link" id="studentProfile">Profile</a>
+                <a href="instructor_profile.html" class="nav-item nav-link" id="instructorProfile">Profile</a>
+                <a href="user_login.html" class="nav-item nav-link">Log out</a>
             </div>
 
         </div>
@@ -108,6 +144,48 @@
     <!-- Courses End -->
 
     <div class="mt-5 text-center"><a href="subject_details.html"><button class="btn btn-primary profile-button" type="button">View More</button></a></div>
+
+
+    <div class="modal fade" id="joinClassModal" tabindex="-1" aria-labelledby="joinClassModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #0dcaf0; color: white;">
+                    <h5 class="modal-title" id="joinClassModalLabel">Join Class Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="joinClassForm">
+                        <input type="hidden" id="selectedSubject" name="selectedSubject">
+                        <input type="hidden" id="selectedGrade" name="selectedGrade">
+
+                        <div class="mb-3">
+                            <label for="studentName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="studentName" name="studentName" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="studentEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="studentEmail" name="studentEmail" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="studentPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="studentPhone" name="studentPhone" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Additional Information</label>
+                            <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary px-4" style="background-color: #0dcaf0; border-color: #0dcaf0;">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Footer Start -->
@@ -196,7 +274,8 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/class_subject.js"></script>
+    <script src="js/navbar_settings.js"></script>
+    <script src="js/subjects.js"></script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -208,6 +287,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
 </body>
 
 </html>

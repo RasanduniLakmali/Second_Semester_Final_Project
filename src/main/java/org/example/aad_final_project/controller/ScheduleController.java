@@ -1,16 +1,14 @@
 package org.example.aad_final_project.controller;
 
 import org.example.aad_final_project.dto.ScheduleDTO;
-import org.example.aad_final_project.entity.Schedule;
 import org.example.aad_final_project.service.ClassService;
 import org.example.aad_final_project.service.ScheduleService;
-import org.example.aad_final_project.service.impl.ClassServiceImpl;
-import org.example.aad_final_project.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.aad_final_project.util.ResponseUtil;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -73,6 +71,17 @@ public class ScheduleController {
             return new ResponseUtil(201, "Schedule deleted!", null);
         } else {
             return new ResponseUtil(200, "Schedule not deleted!", null);
+        }
+    }
+
+
+    @GetMapping("getDetails/{grade}")
+    public ResponseEntity<ScheduleDTO> getNearestClassByGrade(@PathVariable String grade) {
+        ScheduleDTO dto = scheduleService.getNearestScheduleForGrade(grade);
+        if (dto != null) {
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.noContent().build();
         }
     }
 }

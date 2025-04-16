@@ -1,11 +1,11 @@
 package org.example.aad_final_project.controller;
 
+import org.example.aad_final_project.util.ResponseUtil;
 import org.example.aad_final_project.dto.ClassStudentDTO;
 import org.example.aad_final_project.service.ClassStudentService;
-import org.example.aad_final_project.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
+
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -29,7 +29,10 @@ public class ClassStudentController {
     @GetMapping("getClass/{studentName}")
     public String getStudentClass(@PathVariable String studentName) {
         System.out.println(studentName);
-        return classStudentService.getClassName(studentName);
+        String className =  classStudentService.getClassName(studentName);
+
+        System.out.println(className);
+        return className;
     }
 
 

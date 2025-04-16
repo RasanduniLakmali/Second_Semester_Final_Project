@@ -1,5 +1,7 @@
 package org.example.aad_final_project.service.impl;
 
+import org.example.aad_final_project.dto.InstructorDTO;
+import org.example.aad_final_project.dto.ScheduleDTO;
 import org.example.aad_final_project.dto.StudentSubjectDTO;
 import org.example.aad_final_project.entity.*;
 import org.example.aad_final_project.repo.StudentRepo;
@@ -7,11 +9,13 @@ import org.example.aad_final_project.repo.StudentSubjectRepo;
 import org.example.aad_final_project.repo.SubjectRepo;
 import org.example.aad_final_project.service.StudentSubjectService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentSubjectServiceImpl implements StudentSubjectService {
@@ -55,30 +59,51 @@ public class StudentSubjectServiceImpl implements StudentSubjectService {
     }
 
     @Override
-    public boolean update(StudentSubjectDTO studentSubjectDTO) {
-        System.out.println(studentSubjectDTO.toString());
+    public StudentSubjectDTO update(StudentSubjectDTO studentSubjectDTO) {
+        System.out.println(studentSubjectDTO.getStudent_id());
+        System.out.println(studentSubjectDTO.getSubject_id());
 
-        Optional<StudentSubject> studentSubjectOptional = studentSubjectRepo.findByStudentAndName(
+        Optional<StudentSubject> studentSubject = studentSubjectRepo.findByStudent_idAndSubject_id(
                 studentSubjectDTO.getStudent_id(),
-                studentSubjectDTO.getStudent_name()
+                studentSubjectDTO.getSubject_id()
         );
 
-        System.out.println("Record found: " + studentSubjectOptional.isPresent());
+        System.out.println("Record found: " + studentSubject.isPresent());
 
-        if (studentSubjectOptional.isPresent()) {
-            StudentSubject studentSubjectEntity = studentSubjectOptional.get();
-
+        if (studentSubject.isPresent()) {
+            StudentSubject studentSubjectEntity = studentSubject.get();
             studentSubjectEntity.setStudent_name(studentSubjectDTO.getStudent_name());
             studentSubjectEntity.setSubject_name(studentSubjectDTO.getSubject_name());
-
-
-            studentRepo.findById(studentSubjectDTO.getStudent_id()).ifPresent(studentSubjectEntity::setStudent);
-            subjectRepo.findById(studentSubjectDTO.getSubject_id()).ifPresent(studentSubjectEntity::setSubject);
-
+            studentSubjectEntity.setStudent(studentRepo.findById(studentSubjectDTO.getStudent_id()).get());
+            studentSubjectEntity.setSubject(subjectRepo.findById(studentSubjectDTO.getSubject_id()).get());
+            studentSubjectEntity.setInstructor_name(studentSubjectDTO.getInstructor_name());
             studentSubjectRepo.save(studentSubjectEntity);
-            return true;
+            return modelMapper.map(studentSubjectEntity, StudentSubjectDTO.class);
         }
-        return false;
+
+        return null;
     }
+
+    @Override
+    public List<String> getSubjectsByEmail(String email) {
+        Student student = studentRepo.findByEmail(email);
+        List<Subject> subjects = studentSubjectRepo.findByStudentsContaining(student);
+
+        return subjects.stream().map(Subject::getSubject_name).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StudentSubjectDTO> getAll() {
+        List<StudentSubject> list = studentSubjectRepo.findAll();
+        return list.stream().map(s -> {
+            StudentSubjectDTO dto = new StudentSubjectDTO();
+            dto.setStudent_name(s.getStudent().getStudent_name());
+            dto.setSubject_name(s.getSubject().getSubject_name());
+            dto.setInstructor_name(s.getInstructor_name());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+
 
 }

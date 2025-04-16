@@ -1,14 +1,13 @@
 package org.example.aad_final_project.service.impl;
 
 import org.example.aad_final_project.dto.InstructorDTO;
-import org.example.aad_final_project.dto.StudentDTO;
 import org.example.aad_final_project.entity.*;
 import org.example.aad_final_project.repo.AdminRepo;
 import org.example.aad_final_project.repo.InstructorRepo;
 import org.example.aad_final_project.repo.SubjectRepo;
+import org.example.aad_final_project.repo.UserRepository;
 import org.example.aad_final_project.service.InstructorService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,25 +30,43 @@ public class InstructorServiceImpl implements InstructorService {
     @Autowired
     private SubjectRepo subjectRepo;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public boolean saveInstructor(InstructorDTO instructorDTO) {
 
         Instructor instructor = modelMapper.map(instructorDTO, Instructor.class);
 
-        // Fetch Admin entity from database
-        Optional<Admin> optionalAdmin = adminRepo.findById(instructorDTO.getAdmin_id());
+        Optional<User> optionalAdmin = adminRepo.findById(instructorDTO.getAdmin_id());
         Optional<Subject> optionalSubject = subjectRepo.findById(instructorDTO.getSubject_id());
 
-        if (optionalAdmin.isPresent() && optionalSubject.isPresent()) {
-            instructor.setAdmin(optionalAdmin.get());
+        if(optionalAdmin.isPresent() && optionalSubject.isPresent()) {
+
+            User user = new User();
+            user.setName(instructorDTO.getInstructor_name());
+            user.setEmail(instructorDTO.getEmail());
+            user.setMobile(instructorDTO.getPhone());
+            user.setRole(Role.INSTRUCTOR);
+
+            User savedUser = userRepository.save(user);
+
+            instructor.setInstructor_name(instructorDTO.getInstructor_name());
+            instructor.setImage(instructorDTO.getImage());
+            instructor.setAddress(instructorDTO.getAddress());
+            instructor.setPhone(instructorDTO.getPhone());
+            instructor.setEmail(instructorDTO.getEmail());
+            instructor.setQualification(instructorDTO.getQualification());
+            instructor.setSubject_code(instructorDTO.getSubject_code());
             instructor.setSubject(optionalSubject.get());
+            instructor.setUser(savedUser);
+            instructor.setAdmin_id(optionalAdmin.get().getId());
+
+
             instructorRepo.save(instructor);
             return true;
-
-        } else {
-            System.out.println("Admin not found with ID: " +instructorDTO.getAdmin_id());
-            return false;
         }
+       return false;
     }
 
     @Override
@@ -68,8 +85,8 @@ public class InstructorServiceImpl implements InstructorService {
             Instructor instructor = instructorDTO.get();
             InstructorDTO instructorDTO1 = modelMapper.map(instructor, InstructorDTO.class);
 
-            if (instructor.getAdmin()!= null && instructor.getSubject()!=null) {
-                instructorDTO1.setAdmin_id(Integer.valueOf(String.valueOf(instructor.getAdmin().getAdmin_id()))); // Manually set adminId
+            if (instructor.getUser()!= null && instructor.getSubject()!=null) {
+                instructorDTO1.setUser_id(Integer.valueOf(String.valueOf(instructor.getUser().getId()))); // Manually set adminId
                 instructorDTO1.setSubject_id(Integer.valueOf(String.valueOf(instructor.getSubject().getSubject_id())));
             }
 
@@ -91,7 +108,7 @@ public class InstructorServiceImpl implements InstructorService {
             instructor.setEmail(instructorDTO.getEmail());
             instructor.setQualification(instructorDTO.getQualification());
             instructor.setSubject_code(instructorDTO.getSubject_code());
-            instructor.setAdmin(adminRepo.findById(Integer.valueOf(instructorDTO.getAdmin_id())).orElse(null));
+            instructor.setAdmin_id(instructorDTO.getAdmin_id());
             instructor.setSubject(subjectRepo.findById(Integer.valueOf(instructorDTO.getSubject_id())).orElse(null));
 
             if (instructorDTO.getImage() != null) {
@@ -125,6 +142,16 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public String getId(String instructorName) {
         return instructorRepo.findByInstructor_name(instructorName);
+    }
+
+    @Override
+    public String getEmail(String instructorName) {
+        return instructorRepo.findEmailByName(instructorName);
+    }
+
+    @Override
+    public long getInstructorCount() {
+        return instructorRepo.count();
     }
 
 

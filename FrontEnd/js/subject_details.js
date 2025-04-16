@@ -1,15 +1,30 @@
 $(document).ready(function () {
     loadAdmins();
     fetchSubjectData();
+
+    console.log(localStorage.getItem("token"), "meka awe local eken");
 })
 
 /*---------------------------Load admins---------------------------*/
 
 function loadAdmins(){
 
+    const token = localStorage.getItem("jwtToken");
+    console.log(token)
+
+    if (!token) {
+        alert("Token is missing. Please log in again.");
+        return;
+    }
+
     $.ajax({
         url: "http://localhost:8080/api/v1/admin/getAdId",
         method: "GET",
+
+        headers: {
+            "Authorization": "Bearer " + token  // Include the Bearer token in the header
+        },
+
         success: function(data){
             let cmbAdmin = $("#adminId");
             let cmbAdmin2 = $("#adminId2");
@@ -38,12 +53,24 @@ function loadAdmins(){
 /*------------------------------Save subject---------------------------------*/
 
 $("#saveBtn").click(function () {
+
+
     console.log("save button clicked");
+
+    const token = localStorage.getItem("jwtToken");  // Get the JWT token from localStorage
+    console.log(token)
+
+    if (!token) {
+        alert("Token is missing. Please log in again.");
+        return;
+    }
 
     const subjectName = $("#subjectName").val();
     const subjectCode = $("#code").val();
     const adminId = $("#adminId").val();
     const gradeRange = $("#gradeRange").val();
+    const timeDuration = $("#time1").val();
+    const fees = $("#fee").val();
 
     $.ajax({
           url: "http://localhost:8080/api/v1/subject/save",
@@ -56,7 +83,9 @@ $("#saveBtn").click(function () {
               subject_name: subjectName,
               subject_code: subjectCode,
               admin_id: adminId,
-              grade_range: gradeRange
+              grade_range: gradeRange,
+              time_duration: timeDuration,
+              fees: fees
           }),
 
           success: function (data) {
@@ -65,41 +94,75 @@ $("#saveBtn").click(function () {
               fetchSubjectData();
               clearFields()
           },
-          error: function () {
-              alert("Subject not saved.");
-          }
+        error: function (xhr) {
+            console.log("Error Response:", xhr);
+
+            if (xhr.status === 400 && Array.isArray(xhr.responseJSON)) {
+                let messages = xhr.responseJSON;
+
+                let messageHtml = "<ul>";
+                messages.forEach(msg => {
+                    messageHtml += `<li>${msg}</li>`;
+                });
+                messageHtml += "</ul>";
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Validation Errors",
+                    html: messageHtml
+                });
+
+            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseJSON.message
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred."
+                });
+            }
+        }
     })
 })
 
 
 const fetchSubjectData = () => {
+
+
     $.ajax({
         url: "http://localhost:8080/api/v1/subject/getAll",
         method: "GET",
         success: (res) => {
+            console.log("Fetched Subjects:", res);  // Debugging
+
             $("#subjectTableBody").empty();
 
             res.forEach(subject => {
                 $("#subjectTableBody").append(`
-                    <tr>
-                        <td>${subject.subject_name}</td>
-                        <td>${subject.subject_code}</td>
-                        <td>${subject.grade_range}</td>
-                        <td>${subject.admin_id}</td>
-                       
-                        <td>
-                            <button class="btn btn-warning btn-sm edit-btn" id="editBtn" data-bs-target="#editSubjectModal">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-success btn-sm view-btn" id="viewBtn">
-                                <i class="bi bi-eye-fill"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm delete-btn" id="deleteBtn" >
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
+                <tr>
+                    <td>${subject.subject_name}</td>
+                    <td>${subject.subject_code}</td>
+                    <td>${subject.grade_range}</td>
+                    <td>${subject.time_duration}</td>
+                    <td>${subject.fees}</td>
+                    <td>${subject.admin_id ? subject.admin_id : 'N/A'}</td> <!-- Ensure it displays correctly -->
+                    <td>
+                        <button class="btn btn-warning btn-sm edit-btn" id="editBtn">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-success btn-sm view-btn" id="viewBtn">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm delete-btn" id="deleteBtn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
             });
 
             $(".view-btn").click(function () {
@@ -109,11 +172,15 @@ const fetchSubjectData = () => {
                 let subjectName = row.find('td').eq(0).text();
                 let code = row.find('td').eq(1).text();
                 let gradeRange = row.find('td').eq(2).text();
-                let adminId = row.find('td').eq(3).text();
+                let timeDuration = row.find('td').eq(3).text();
+                let fees = row.find('td').eq(4).text();
+                let adminId = row.find('td').eq(5).text();
 
                 $("#subjectName3").text(subjectName);
                 $("#subjectCode3").text(code);
                 $('#gradeRange3').text(gradeRange);
+                $("#time3").text(timeDuration);
+                $("#fees3").text(fees);
                 $("#adminId3").text(adminId);
 
                 $("#subjectDetailsModal").modal("show");
@@ -131,24 +198,23 @@ const fetchSubjectData = () => {
 
 $(document).on("click", "#editBtn", function () {
 
-    loadAdmins();
-
-    // Get the parent row of the clicked edit button
     let row = $(this).closest('tr');
 
     // Get data from the row cells
     let subjectName = row.find('td').eq(0).text();
     let code = row.find('td').eq(1).text();
     let gradeRange = row.find('td').eq(2).text();
-    let adminId = row.find('td').eq(3).text();
+    let timeDuration = row.find('td').eq(3).text();
+    let fees = row.find('td').eq(4).text();
+    let adminId = row.find('td').eq(5).text();
 
 
-
-    // Set the values in the modal
     $("#subjectName2").val(subjectName);
     $("#code2").val(code);
     $("#adminId2").val(adminId);
     $('#gradeRange2').val(gradeRange);
+    $("#fee2").val(fees);
+    $('#time').val(timeDuration);
 
 
     // Show the modal
@@ -161,10 +227,20 @@ $(document).on("click", "#editBtn", function () {
 
 $("#updateBtn").click(function () {
 
+    const token = localStorage.getItem("jwtToken");  // Get the JWT token from localStorage
+    console.log(token)
+
+    if (!token) {
+        alert("Token is missing. Please log in again.");
+        return;
+    }
+
     const subjectName = $("#subjectName2").val();
     const subjectCode = $("#code2").val();
     const adminId = $("#adminId2").val();
     const gradeRange = $("#gradeRange2").val();
+    const timeDuration = $("#time").val();
+    const fees = $("#fee2").val();
 
     $.ajax({
         url: "http://localhost:8080/api/v1/subject/update",
@@ -177,7 +253,9 @@ $("#updateBtn").click(function () {
             subject_name: subjectName,
             subject_code: subjectCode,
             admin_id: adminId,
-            grade_range: gradeRange
+            grade_range: gradeRange,
+            time_duration: timeDuration,
+            fees: fees
         }),
 
         success: function (data) {
@@ -186,8 +264,37 @@ $("#updateBtn").click(function () {
             fetchSubjectData();
             clearFields();
         },
-        error: function () {
-            alert("Subject not updated.");
+        error: function (xhr) {
+            console.log("Error Response:", xhr);
+
+            if (xhr.status === 400 && Array.isArray(xhr.responseJSON)) {
+                let messages = xhr.responseJSON;
+
+                let messageHtml = "<ul>";
+                messages.forEach(msg => {
+                    messageHtml += `<li>${msg}</li>`;
+                });
+                messageHtml += "</ul>";
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Validation Errors",
+                    html: messageHtml
+                });
+
+            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseJSON.message
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "An unexpected error occurred."
+                });
+            }
         }
     })
 })
@@ -216,6 +323,26 @@ $(document).on("click", "#deleteBtn", function () {
     }
 
 })
+
+
+$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+        const inputValue = $(this).val().trim().toLowerCase();
+
+        $("#subjectTableBody tr").each(function () {
+            const subjectName = $(this).find("td").eq(0).text().trim().toLowerCase();
+
+            if (subjectName.includes(inputValue)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+
+});
+
+
 
 function clearFields() {
     $("#subjectName").val("");

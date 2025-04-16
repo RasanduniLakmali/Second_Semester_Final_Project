@@ -25,6 +25,7 @@ public class ClassEntity {
     private int capacity;
     private String hall_number;
     private String admin_name;
+    private double class_fee;
 
     @OneToMany(mappedBy = "classEntity", cascade = CascadeType.ALL)
     private List<Schedule> schedules;
@@ -41,10 +42,8 @@ public class ClassEntity {
     @OneToMany(mappedBy ="classEntity", cascade = CascadeType.ALL )
     private List<Payment> payments;
 
-    @OneToMany(mappedBy ="classEntity", cascade = CascadeType.ALL )
-    private List<Attendance> attendances;
 
     @ManyToOne
     @JoinColumn(name = "admin_id")
-    private Admin admin;
+    private User admin;
 }
