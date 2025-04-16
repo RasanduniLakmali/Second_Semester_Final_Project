@@ -21,6 +21,6 @@ Screenshots
 ![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20222719.png)
 
 5) Subject Details Page
-![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/8c1fa8e3369829cc18658826896ec30be2d26b7f/Screenshot%202025-04-16%20222719.png)
+![image alt](https://github.com/RasanduniLakmali/Second_Semester_Final_Project/blob/e2a76b6e77feddcd447a7c8f6f98360c4d96c953/Screenshot%202025-04-16%20222429.png)
 
 
