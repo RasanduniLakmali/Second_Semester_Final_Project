@@ -4,4 +4,5 @@ The Smart Tuition Class Management System is a full-stack application designed t
 
 The system uses **JWT (JSON Web Tokens)** for secure authentication and includes **email verification** for added security.
 
-Admin Dashboard
+Demo Video Link
+
